@@ -40,18 +40,33 @@ export default function Feed() {
     fetchData();
   }, []);
 
-  // === NEW: THE ACTUAL FILTER LOGIC ===
-  const displayedProfiles = profiles.filter(p => 
-    (filterDistrict === 'All' || p.microdistrict === filterDistrict) &&
-    (filterIndustry === 'All' || p.industry === filterIndustry) &&
-    (filterType === 'All' || p.employment_type === filterType)
-  );
+  // === BULLETPROOF FILTER LOGIC ===
+  const displayedProfiles = profiles.filter(p => {
+    // We add fallbacks here so if Ferhad's DB returns null, React doesn't crash
+    const pDistrict = p.microdistrict || 'Unknown';
+    const pIndustry = p.industry || 'Unknown';
+    const pType = p.employment_type || 'Unknown';
 
-  const displayedVacancies = vacancies.filter(v => 
-    (filterDistrict === 'All' || v.microdistrict === filterDistrict) &&
-    (filterIndustry === 'All' || v.industry === filterIndustry) &&
-    (filterType === 'All' || v.employment_type === filterType)
-  );
+    const matchDistrict = filterDistrict === 'All' || pDistrict === filterDistrict;
+    const matchIndustry = filterIndustry === 'All' || pIndustry === filterIndustry;
+    const matchType = filterType === 'All' || pType === filterType;
+
+    return matchDistrict && matchIndustry && matchType;
+  });
+
+  const displayedVacancies = vacancies.filter(v => {
+    const vDistrict = v.microdistrict || 'Unknown';
+    const vIndustry = v.industry || 'Unknown';
+    const vType = v.employment_type || 'Unknown';
+
+    const matchDistrict = filterDistrict === 'All' || vDistrict === filterDistrict;
+    const matchIndustry = filterIndustry === 'All' || vIndustry === filterIndustry;
+    const matchType = filterType === 'All' || vType === filterType;
+
+    return matchDistrict && matchIndustry && matchType;
+  });
+
+  console.log("DATA FROM FERHAD:", profiles[0], vacancies[0]);
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-800">
