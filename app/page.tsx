@@ -236,12 +236,12 @@ export default function App() {
                       <h3 className="font-bold text-blue-900 flex items-center gap-2">
                         ✨ Magic AI Autofill
                       </h3>
-                      <p className="text-sm text-blue-700 mt-1">Upload your CV image (JPEG/PNG) and let our AI fill out your profile automatically.</p>
+                      <p className="text-sm text-blue-700 mt-1">Upload your CV (PDF/JPEG/PNG) and let our AI fill out your profile automatically.</p>
                     </div>
                     <div className="relative">
                       <input 
                         type="file" 
-                        accept="image/jpeg, image/png" 
+                        accept="application/pdf, image/jpeg, image/png" 
                         onChange={handleCVUpload}
                         disabled={isParsingCV}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed" 
@@ -250,7 +250,7 @@ export default function App() {
                         disabled={isParsingCV}
                         className={`bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all ${isParsingCV ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-700'}`}
                       >
-                        {isParsingCV ? 'Parsing...' : 'Upload CV Image'}
+                        {isParsingCV ? 'Parsing...' : 'Upload CV'}
                       </button>
                     </div>
                   </div>
