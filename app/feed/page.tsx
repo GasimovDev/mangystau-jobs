@@ -154,7 +154,9 @@ export default function Feed() {
                  </p>
                </div>
                <p className="text-slate-600 text-sm mb-4 line-clamp-3">{job.requirements}</p>
-               <p className="text-slate-800 font-bold mb-4">💰 {job.salary}</p>
+               <p className="text-slate-800 font-bold text-lg mb-4">
+                💰 {job.salary ? `${Number(job.salary).toLocaleString('ru-RU')} ₸` : 'Договорная (Negotiable)'}
+               </p>
                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
                  <span className="text-xs font-bold text-slate-500">📍 {job.microdistrict || 'Aktau'}</span>
                  <a href={`https://t.me/${job.telegram_contact?.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center transition-colors shadow-sm">Откликнуться (Apply)</a>
