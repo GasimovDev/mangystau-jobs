@@ -54,18 +54,36 @@ export default function Feed() {
           </h1>
           <p className="text-slate-500 font-medium">Smart matching for Aktau youth and small business.</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
+           <select 
+              className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            >
+              <option value="All">Industry (Сфера)</option>
+              <option value="IT">IT & Tech</option>
+              <option value="Food">Food & Beverage</option>
+              <option value="Retail">Retail & Sales</option>
+            </select>
+            
+            <select 
+              className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            >
+              <option value="All">Type (Тип)</option>
+              <option value="Full">Full-time (Полная)</option>
+              <option value="Part">Part-time (Частичная)</option>
+            </select>
+
            <select 
               value={filterDistrict} 
               onChange={(e) => setFilterDistrict(e.target.value)}
               className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
             >
-              <option value="All">All Microdistricts</option>
+              <option value="All">All Locations</option>
               <option value="14th">14th Microdistrict</option>
               <option value="15th">15th Microdistrict</option>
               <option value="27th">27th Microdistrict</option>
               <option value="Seafront">Seafront</option>
             </select>
+
           <button 
             onClick={() => window.location.href = '/'}
             className="bg-slate-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-slate-800 transition-all text-sm shadow-sm"

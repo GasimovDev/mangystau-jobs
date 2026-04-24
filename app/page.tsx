@@ -7,8 +7,8 @@ export default function App() {
   const [successData, setSuccessData] = useState<any>(null);
   
   const [seekerData, setSeekerData] = useState({
-    name: '', title: '', microdistrict: '', skills: '', bio: '', telegram: ''
-  });
+  name: '', title: '', microdistrict: '', skills: '', bio: '', telegram: '', photoUrl: ''
+});
 
   // === FIXED: MATCHING FERHAD'S DB EXACTLY ===
   const [employerData, setEmployerData] = useState({
@@ -170,8 +170,12 @@ export default function App() {
                     <input type="text" name="skills" onChange={handleSeekerChange} placeholder="Latte Art, Fluent English, Fast Paced" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Short Bio</label>
-                    <textarea name="bio" onChange={handleSeekerChange} rows={3} placeholder="I'm a fast learner looking for evening shifts..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Motivation Letter (Почему мы должны выбрать вас?)</label>
+                    <textarea name="bio" onChange={handleSeekerChange} rows={4} placeholder="Describe why you are the best fit for this role..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Profile Photo URL (Optional)</label>
+                    <input type="url" name="photoUrl" onChange={handleSeekerChange} placeholder="https://link-to-your-photo.com/img.jpg" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                   </div>
                 </div>
               ) : (
@@ -205,7 +209,7 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                      <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Monthly Salary (KZT)</label>
-                      <input type="text" name="salary" onChange={handleEmployerChange} placeholder="e.g., 200,000 KZT" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
+                      <input type="number" name="salary" onChange={handleEmployerChange} placeholder="e.g., 200,000 KZT" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Contact</label>
