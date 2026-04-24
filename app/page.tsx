@@ -41,7 +41,10 @@ export default function App() {
         telegram_username: employerData.telegram
     };
 
-    const backendUrl = "https://raven-companion-starboard.ngrok-free.dev/profiles"; 
+    // === NEW: THE SMART TRAFFIC COP ===
+    const backendUrl = userType === 'seeker' 
+      ? "https://raven-companion-starboard.ngrok-free.dev/profiles" 
+      : "https://raven-companion-starboard.ngrok-free.dev/vacancies"; 
 
     try {
       const response = await fetch(backendUrl, {
@@ -54,10 +57,10 @@ export default function App() {
       });
 
       if (response.ok) {
-        // === NEW: PARSE THE JSON AND SET SUCCESS DATA ===
         const result = await response.json();
-        // Ferhad said the data is in an array: data.data[0]
-        setSuccessData(result.data[0]); 
+        // Support both array and object responses just in case Ferhad changed it
+        const finalData = Array.isArray(result.data) ? result.data[0] : (result.data || result);
+        setSuccessData(finalData); 
       } else {
         const errorText = await response.text();
         alert(`Server Error! Press F12. Logs: ${errorText}`);
@@ -225,9 +228,9 @@ export default function App() {
           )}
         </div>
         
-        {/* RIGHT COLUMN: PREVIEW */}
-        <div className="lg:col-span-5 bg-slate-100/50 rounded-3xl p-6 flex flex-col justify-center items-center border-2 border-dashed border-slate-200">
-           <p className="text-slate-500 font-medium">Live Preview Update Active. Check Live Site.</p>
+        
+        <div className="lg:col-span-5 flex justify-center items-center">
+          <img src="/hero.jpeg" alt="AktauMatch AI" className="rounded-3xl shadow-lg w-full object-cover" />
         </div>
 
       </div>
