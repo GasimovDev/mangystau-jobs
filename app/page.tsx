@@ -50,7 +50,7 @@ export default function App() {
 
     // 2. Put Ferhad's exact ngrok URL here!
     // NOTE: Replace "your-ngrok-url" with the actual random words ngrok gave him!
-    const backendUrl = "https://your-ngrok-url.ngrok-free.app/profiles"; 
+    const backendUrl = "https://raven-companion-starboard.ngrok-free.dev/profiles"; 
 
     try {
       console.log("Sending Payload:", payload);
