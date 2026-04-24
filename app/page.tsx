@@ -258,7 +258,7 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                      <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
-                      <input type="text" name="name" onChange={handleSeekerChange} placeholder="e.g., Arman Serikov" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+                      <input type="text" name="name" value={seekerData.name} onChange={handleSeekerChange} placeholder="e.g., Arman Serikov" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                     </div>
                      <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">CV Photo (Max 3x4 PNG/JPG)</label>
@@ -270,7 +270,7 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Desired Role</label>
-                      <input type="text" name="title" onChange={handleSeekerChange} placeholder="e.g., Barista" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+                      <input type="text" name="title" value={seekerData.title} onChange={handleSeekerChange} placeholder="e.g., Barista" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Industry</label>
@@ -303,17 +303,17 @@ export default function App() {
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Username</label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">@</span>
-                        <input type="text" name="telegram" onChange={handleSeekerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+                        <input type="text" name="telegram" value={seekerData.telegram} onChange={handleSeekerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                       </div>
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-slate-700 mb-1.5">Top Skills (comma separated)</label>
-                    <input type="text" name="skills" onChange={handleSeekerChange} placeholder="Latte Art, Fluent English, Fast Paced" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+                    <input type="text" name="skills" value={seekerData.skills} onChange={handleSeekerChange} placeholder="Latte Art, Fluent English, Fast Paced" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-slate-700 mb-1.5">Motivation Letter (Почему мы должны выбрать вас?)</label>
-                    <textarea name="bio" onChange={handleSeekerChange} rows={4} placeholder="Describe why you are the best fit for this role..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
+                    <textarea name="bio" value={seekerData.bio} onChange={handleSeekerChange} rows={4} placeholder="Describe why you are the best fit for this role..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
                   </div>
                 </div>
               ) : (
