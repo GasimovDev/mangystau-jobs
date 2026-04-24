@@ -68,7 +68,10 @@ export default function App() {
       if (response.ok) {
         alert("Success! Profile Sent to Ferhad's AI.");
       } else {
-        alert("Error: Ferhad's server rejected the data. Tell him to check his terminal logs!");
+        // Read the exact error Ferhad's server sent back
+        const errorText = await response.text();
+        console.error("FERHAD'S BACKEND SAYS:", errorText);
+        alert(`Server rejected it (Status ${response.status}). Press F12 and check the Console to see Ferhad's exact error message!`);
       }
       
     } catch (error) {
