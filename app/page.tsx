@@ -4,16 +4,15 @@ import React, { useState } from 'react';
 export default function App() {
   const [userType, setUserType] = useState('seeker'); 
   const [isLoading, setIsLoading] = useState(false);
-  
-  // === NEW: SUCCESS STATE ===
   const [successData, setSuccessData] = useState<any>(null);
   
   const [seekerData, setSeekerData] = useState({
     name: '', title: '', microdistrict: '', skills: '', bio: '', telegram: ''
   });
 
+  // === FIXED: MATCHING FERHAD'S DB EXACTLY ===
   const [employerData, setEmployerData] = useState({
-    companyName: '', industry: '', microdistrict: '', vibe: '', achievements: '', telegram: ''
+    companyName: '', industry: '', microdistrict: '', jobTitle: '', requirements: '', salary: '', telegram: ''
   });
 
   const handleSeekerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => 
@@ -25,6 +24,7 @@ export default function App() {
   const handleSubmit = async () => {
     setIsLoading(true);
 
+    // === FIXED: MAPPING TO FERHAD'S EXACT KEYS ===
     const payload = userType === 'seeker' ? {
         full_name: seekerData.name,
         title: seekerData.title,
@@ -36,12 +36,12 @@ export default function App() {
         company_name: employerData.companyName,
         industry: employerData.industry,
         microdistrict: employerData.microdistrict,
-        achievements: employerData.achievements,
-        vibe: employerData.vibe,
-        telegram_username: employerData.telegram
+        job_title: employerData.jobTitle,
+        requirements: employerData.requirements,
+        salary: employerData.salary,
+        telegram_contact: employerData.telegram // Note the exact key name!
     };
 
-    // === NEW: THE SMART TRAFFIC COP ===
     const backendUrl = userType === 'seeker' 
       ? "https://raven-companion-starboard.ngrok-free.dev/profiles" 
       : "https://raven-companion-starboard.ngrok-free.dev/vacancies"; 
@@ -58,7 +58,6 @@ export default function App() {
 
       if (response.ok) {
         const result = await response.json();
-        // Support both array and object responses just in case Ferhad changed it
         const finalData = Array.isArray(result.data) ? result.data[0] : (result.data || result);
         setSuccessData(finalData); 
       } else {
@@ -85,39 +84,37 @@ export default function App() {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         
         <div className="lg:col-span-7">
-          {/* === NEW: IF SUCCESS, SHOW CELEBRATION. IF NOT, SHOW FORM === */}
           {successData ? (
             <div className="bg-white rounded-3xl shadow-sm border border-emerald-100 p-8 md:p-12 flex flex-col items-center text-center animate-fade-in-up">
               <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6 text-emerald-500 border-4 border-emerald-50">
                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
               </div>
-              <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Profile Activated!</h2>
-              <p className="text-slate-500 font-medium mb-8">Your data has been processed by our AI matching engine.</p>
+              <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Data Saved Successfully!</h2>
+              <p className="text-slate-500 font-medium mb-8">Your information has been processed by our AI matching engine.</p>
               
-              <div className="w-full bg-slate-50 rounded-2xl p-6 border border-slate-100 text-left mb-8">
-                <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">AI Generated Strengths</p>
-                <div className="flex flex-wrap gap-2">
-                  {/* We split Ferhad's AI tags by comma to make nice little badges */}
-                  {successData.ai_tags ? successData.ai_tags.split(',').map((tag: string, i: number) => (
-                    <span key={i} className="bg-blue-100 text-blue-700 border border-blue-200 px-4 py-2 rounded-xl font-bold text-sm shadow-sm">
-                      ✨ {tag.trim()}
-                    </span>
-                  )) : (
-                    <span className="text-slate-500 italic">Processing tags...</span>
-                  )}
+              {/* Only show AI tags if it's a Seeker (Employers might not have tags depending on Ferhad's code) */}
+              {successData.ai_tags && (
+                <div className="w-full bg-slate-50 rounded-2xl p-6 border border-slate-100 text-left mb-8">
+                  <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">AI Generated Strengths</p>
+                  <div className="flex flex-wrap gap-2">
+                    {successData.ai_tags.split(',').map((tag: string, i: number) => (
+                      <span key={i} className="bg-blue-100 text-blue-700 border border-blue-200 px-4 py-2 rounded-xl font-bold text-sm shadow-sm">
+                        ✨ {tag.trim()}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <button 
                 onClick={() => window.location.href = '/feed'} 
                 className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center"
               >
-                Go to the Jobs Feed 
+                Go to the Live Feed 
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </button>
             </div>
           ) : (
-            /* --- THE ORIGINAL FORM --- */
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 md:p-10">
               <div className="flex bg-slate-200 p-1.5 rounded-xl w-fit mb-8">
                 <button 
@@ -135,10 +132,11 @@ export default function App() {
               </div>
 
               <h2 className="text-2xl font-bold mb-8 text-slate-800">
-                {userType === 'seeker' ? 'Build Your Profile' : 'Company Setup'}
+                {userType === 'seeker' ? 'Build Your Profile' : 'Post a Vacancy'}
               </h2>
 
               {userType === 'seeker' ? (
+                // === SEEKER FORM (UNCHANGED) ===
                 <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
@@ -177,15 +175,22 @@ export default function App() {
                   </div>
                 </div>
               ) : (
+                // === FIXED EMPLOYER FORM ===
                 <div className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Company Name</label>
-                    <input type="text" name="companyName" onChange={handleEmployerChange} placeholder="e.g., OceanView Cafe" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
-                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Company Name</label>
+                      <input type="text" name="companyName" onChange={handleEmployerChange} placeholder="e.g., OceanView Cafe" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
+                    </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Industry</label>
                       <input type="text" name="industry" onChange={handleEmployerChange} placeholder="e.g., Food & Beverage" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Job Title</label>
+                      <input type="text" name="jobTitle" onChange={handleEmployerChange} placeholder="e.g., Barista needed" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Microdistrict</label>
@@ -197,20 +202,22 @@ export default function App() {
                       </select>
                     </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Username</label>
-                    <div className="relative">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">@</span>
-                      <input type="text" name="telegram" onChange={handleEmployerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                     <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Monthly Salary (KZT)</label>
+                      <input type="text" name="salary" onChange={handleEmployerChange} placeholder="e.g., 200,000 KZT" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Contact</label>
+                      <div className="relative">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">@</span>
+                        <input type="text" name="telegram" onChange={handleEmployerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
+                      </div>
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Key Selling Point</label>
-                    <input type="text" name="achievements" onChange={handleEmployerChange} placeholder="e.g., 'Free meals on shift'" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Workplace Vibe</label>
-                    <textarea name="vibe" onChange={handleEmployerChange} rows={3} placeholder="Describe the atmosphere..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all resize-none"></textarea>
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Job Requirements</label>
+                    <textarea name="requirements" onChange={handleEmployerChange} rows={3} placeholder="What are the daily tasks and required skills?..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all resize-none"></textarea>
                   </div>
                 </div>
               )}
@@ -222,15 +229,15 @@ export default function App() {
                 ${userType === 'seeker' ? 'bg-blue-600 shadow-blue-200' : 'bg-emerald-600 shadow-emerald-200'} 
                 ${isLoading ? 'opacity-70 cursor-not-allowed animate-pulse' : ''}`}
               >
-                {isLoading ? '🤖 AI is Analyzing Profile...' : 'Save Profile & Activate AI Matching'}
+                {isLoading ? '🤖 Processing...' : 'Save Profile & Activate AI Matching'}
               </button>
             </div>
           )}
         </div>
         
-        
+        {/* RIGHT COLUMN: IMAGE OVERRIDE */}
         <div className="lg:col-span-5 flex justify-center items-center">
-          <img src="/hero.jpeg" alt="AktauMatch AI" className="rounded-3xl shadow-lg w-full object-cover" />
+          <img src="/hero.png" alt="AktauMatch AI" className="rounded-3xl shadow-lg w-full object-cover" />
         </div>
 
       </div>
