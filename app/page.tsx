@@ -53,15 +53,20 @@ export default function App() {
 
       const parsedData = await res.json();
       
+      // Farhad's backend might wrap the response in a 'data' key or an array
+      const actualData = Array.isArray(parsedData?.data) ? parsedData.data[0] : (parsedData?.data || parsedData);
+      
+      console.log("Magic AI Data:", actualData);
+
       setSeekerData(prev => ({
         ...prev,
-        name: parsedData.full_name || prev.name,
-        title: parsedData.title || prev.title,
-        skills: parsedData.skills || prev.skills,
-        bio: parsedData.bio || prev.bio,
+        name: actualData.full_name || actualData.name || prev.name,
+        title: actualData.title || actualData.job_title || actualData.role || prev.title,
+        skills: actualData.skills || actualData.top_skills || prev.skills,
+        bio: actualData.bio || actualData.motivation || prev.bio,
       }));
       
-      alert("✨ Magic AI Autofill Complete!");
+      alert("✨ Magic AI Autofill Complete! (Check console if fields are empty)");
     } catch (error) {
       console.error("CV Upload failed:", error);
       alert("Network Error: Could not reach the CV parsing service.");
