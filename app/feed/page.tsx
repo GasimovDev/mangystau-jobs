@@ -199,7 +199,10 @@ export default function Feed() {
               </div>
               <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
                 <span className="text-xs font-bold text-slate-500">📍 {profile.microdistrict || 'Aktau'}</span>
-                <a href={`https://t.me/${profile.telegram_username?.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center transition-colors shadow-sm">Contact</a>
+                <div className="flex gap-2">
+                  <a href={`/profile/${profile.telegram_username?.replace('@', '')}`} className="bg-white border border-blue-200 text-blue-600 hover:bg-blue-50 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors shadow-sm">View Profile</a>
+                  <a href={`https://t.me/${profile.telegram_username?.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center transition-colors shadow-sm">Contact</a>
+                </div>
               </div>
             </div>
           ))}
