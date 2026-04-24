@@ -12,7 +12,7 @@ export default function App() {
 
   // === FIXED: MATCHING FERHAD'S DB EXACTLY ===
   const [employerData, setEmployerData] = useState({
-    companyName: '', industry: '', microdistrict: '', jobTitle: '', requirements: '', salary: '', telegram: ''
+    companyName: '', industry: 'Food & Beverage', type: 'Full-time', microdistrict: '', jobTitle: '', requirements: '', salary: '', telegram: ''
   });
 
   const handleSeekerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => 
@@ -34,6 +34,17 @@ export default function App() {
     setEmployerData({ ...employerData, [e.target.name]: e.target.value });
 
   const handleSubmit = async () => {
+    if (userType === 'seeker') {
+      if (!seekerData.name || !seekerData.title || !seekerData.microdistrict || !seekerData.skills || !seekerData.bio || !seekerData.telegram) {
+        alert("Please fill out all required fields (Photo is optional).");
+        return;
+      }
+    } else {
+      if (!employerData.companyName || !employerData.jobTitle || !employerData.microdistrict || !employerData.requirements || !employerData.salary || !employerData.telegram) {
+        alert("Please fill out all required fields.");
+        return;
+      }
+    }
     setIsLoading(true);
 
     // === FIXED: MAPPING TO FERHAD'S EXACT KEYS ===
@@ -41,7 +52,7 @@ export default function App() {
         full_name: seekerData.name,
         title: seekerData.title,
         microdistrict: seekerData.microdistrict,
-        industry: seekerData.industry,              
+        industry: seekerData.industry,               
         employment_type: seekerData.type,            
         photo_data: seekerData.photoBase64,          
         skills: seekerData.skills,
@@ -50,11 +61,12 @@ export default function App() {
     } : {
         company_name: employerData.companyName,
         industry: employerData.industry,
+        employment_type: employerData.type,        // NEW: This fixes the filters!
         microdistrict: employerData.microdistrict,
         job_title: employerData.jobTitle,
         requirements: employerData.requirements,
         salary: employerData.salary,
-        telegram_contact: employerData.telegram // Note the exact key name!
+        telegram_contact: employerData.telegram 
     };
 
     const backendUrl = userType === 'seeker' 
@@ -217,14 +229,25 @@ export default function App() {
               ) : (
                 // === FIXED EMPLOYER FORM ===
                 <div className="space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Company Name</label>
                       <input type="text" name="companyName" onChange={handleEmployerChange} placeholder="e.g., OceanView Cafe" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
                     </div>
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Industry</label>
-                      <input type="text" name="industry" onChange={handleEmployerChange} placeholder="e.g., Food & Beverage" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
+                      <select name="industry" value={employerData.industry} onChange={handleEmployerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none">
+                        <option value="Food & Beverage">Food & Beverage</option>
+                        <option value="IT & Tech">IT & Tech</option>
+                        <option value="Retail & Sales">Retail & Sales</option>
+                      </select>
+                    </div>
+                     <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Type</label>
+                      <select name="type" value={employerData.type} onChange={handleEmployerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none">
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                      </select>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
