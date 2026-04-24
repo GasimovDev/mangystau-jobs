@@ -316,7 +316,7 @@ export default function App() {
         
         {/* RIGHT COLUMN: IMAGE OVERRIDE */}
         <div className="lg:col-span-5 flex justify-center items-center">
-          <img src="/hero.png" alt="AktauMatch AI" className="rounded-3xl shadow-lg w-full object-cover" />
+          <img src="/hero.jpeg" alt="AktauMatch AI" className="rounded-3xl shadow-lg w-full object-cover" />
         </div>
 
       </div>
