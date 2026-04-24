@@ -68,9 +68,9 @@ export default function App() {
         full_name: seekerData.name,
         title: seekerData.title,
         microdistrict: seekerData.microdistrict,
-        industry: seekerData.industry,               
-        employment_type: seekerData.type,            
-        photo_data: seekerData.photoBase64,          
+        // industry: seekerData.industry,               // TEMPORARILY DISABLED
+        // employment_type: seekerData.type,            // TEMPORARILY DISABLED
+        // photo_data: seekerData.photoBase64,          // TEMPORARILY DISABLED
         skills: seekerData.skills,
         bio: seekerData.bio,
         telegram_username: seekerData.telegram
