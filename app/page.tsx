@@ -35,13 +35,29 @@ export default function App() {
 
   const handleSubmit = async () => {
     if (userType === 'seeker') {
-      if (!seekerData.name || !seekerData.title || !seekerData.microdistrict || !seekerData.skills || !seekerData.bio || !seekerData.telegram) {
-        alert("Please fill out all required fields (Photo is optional).");
+      const missing = [];
+      if (!seekerData.name) missing.push("Full Name");
+      if (!seekerData.title) missing.push("Desired Role");
+      if (!seekerData.microdistrict) missing.push("Microdistrict");
+      if (!seekerData.skills) missing.push("Top Skills");
+      if (!seekerData.bio) missing.push("Motivation Letter");
+      if (!seekerData.telegram) missing.push("Telegram Username");
+
+      if (missing.length > 0) {
+        alert(`Missing Seeker Fields: ${missing.join(", ")}`);
         return;
       }
     } else {
-      if (!employerData.companyName || !employerData.jobTitle || !employerData.microdistrict || !employerData.requirements || !employerData.salary || !employerData.telegram) {
-        alert("Please fill out all required fields.");
+      const missing = [];
+      if (!employerData.companyName) missing.push("Company Name");
+      if (!employerData.jobTitle) missing.push("Job Title");
+      if (!employerData.microdistrict) missing.push("Microdistrict");
+      if (!employerData.salary) missing.push("Salary");
+      if (!employerData.telegram) missing.push("Telegram Contact");
+      if (!employerData.requirements) missing.push("Requirements");
+
+      if (missing.length > 0) {
+        alert(`Missing Employer Fields: ${missing.join(", ")}`);
         return;
       }
     }
