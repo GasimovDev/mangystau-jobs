@@ -7,16 +7,17 @@ export default function Feed() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   
-  // Hackathon Requirement 05: Filtering
-  const [activeTab, setActiveTab] = useState('jobs'); // 'jobs' or 'talent'
+  const [activeTab, setActiveTab] = useState('jobs'); 
+  
+  // === NEW: ALL THREE FILTERS CONNECTED ===
   const [filterDistrict, setFilterDistrict] = useState('All');
+  const [filterIndustry, setFilterIndustry] = useState('All');
+  const [filterType, setFilterType] = useState('All');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const headers = { 'ngrok-skip-browser-warning': 'true' };
-        
-        // Fetch BOTH Profiles and Vacancies at the same time
         const [profilesRes, vacanciesRes] = await Promise.all([
           fetch('https://raven-companion-starboard.ngrok-free.dev/profiles', { headers }),
           fetch('https://raven-companion-starboard.ngrok-free.dev/vacancies', { headers })
@@ -29,21 +30,28 @@ export default function Feed() {
         
         setProfiles(profilesData.data || profilesData);
         setVacancies(vacanciesData.data || vacanciesData);
-        
       } catch (err) {
         console.error("Fetch error:", err);
-        setError("Could not connect to the backend. Is Ferhad's server running?");
+        setError("Could not connect to the backend.");
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
-  // Filter Logic
-  const displayedProfiles = profiles.filter(p => filterDistrict === 'All' || p.microdistrict === filterDistrict);
-  const displayedVacancies = vacancies.filter(v => filterDistrict === 'All' || v.microdistrict === filterDistrict);
+  // === NEW: THE ACTUAL FILTER LOGIC ===
+  const displayedProfiles = profiles.filter(p => 
+    (filterDistrict === 'All' || p.microdistrict === filterDistrict) &&
+    (filterIndustry === 'All' || p.industry === filterIndustry) &&
+    (filterType === 'All' || p.employment_type === filterType)
+  );
+
+  const displayedVacancies = vacancies.filter(v => 
+    (filterDistrict === 'All' || v.microdistrict === filterDistrict) &&
+    (filterIndustry === 'All' || v.industry === filterIndustry) &&
+    (filterType === 'All' || v.employment_type === filterType)
+  );
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-800">
@@ -54,22 +62,28 @@ export default function Feed() {
           </h1>
           <p className="text-slate-500 font-medium">Smart matching for Aktau youth and small business.</p>
         </div>
+        
+        {/* === UPDATED DROPDOWNS (BOUND TO STATE) === */}
         <div className="flex flex-wrap gap-3">
            <select 
+              value={filterIndustry}
+              onChange={(e) => setFilterIndustry(e.target.value)}
               className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
             >
               <option value="All">Industry (Сфера)</option>
-              <option value="IT">IT & Tech</option>
-              <option value="Food">Food & Beverage</option>
-              <option value="Retail">Retail & Sales</option>
+              <option value="Food & Beverage">Food & Beverage</option>
+              <option value="IT & Tech">IT & Tech</option>
+              <option value="Retail & Sales">Retail & Sales</option>
             </select>
             
             <select 
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
               className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
             >
               <option value="All">Type (Тип)</option>
-              <option value="Full">Full-time (Полная)</option>
-              <option value="Part">Part-time (Частичная)</option>
+              <option value="Full-time">Full-time (Полная)</option>
+              <option value="Part-time">Part-time (Частичная)</option>
             </select>
 
            <select 
@@ -94,16 +108,10 @@ export default function Feed() {
       </div>
 
       <div className="max-w-6xl mx-auto mb-8 flex bg-slate-200 p-1.5 rounded-xl w-fit">
-        <button 
-          onClick={() => setActiveTab('jobs')}
-          className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'jobs' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
-        >
+        <button onClick={() => setActiveTab('jobs')} className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'jobs' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}>
           Find a Job (Vacancies)
         </button>
-        <button 
-          onClick={() => setActiveTab('talent')}
-          className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'talent' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
-        >
+        <button onClick={() => setActiveTab('talent')} className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'talent' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
           Find Talent (Profiles)
         </button>
       </div>
@@ -114,9 +122,7 @@ export default function Feed() {
           <p className="font-bold animate-pulse">Syncing with AI Database...</p>
         </div>
       ) : error ? (
-        <div className="bg-red-50 text-red-600 p-6 rounded-2xl border border-red-200 text-center font-bold">
-          ⚠️ {error}
-        </div>
+        <div className="bg-red-50 text-red-600 p-6 rounded-2xl border border-red-200 text-center font-bold">⚠️ {error}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
@@ -127,23 +133,13 @@ export default function Feed() {
                  <span className="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">Hiring Now</span>
                  <h3 className="font-bold text-xl text-slate-900 leading-tight">{job.job_title}</h3>
                  <p className="text-emerald-600 font-semibold">{job.company_name}</p>
+                 <p className="text-slate-400 text-xs mt-1 font-bold">{job.industry} • {job.employment_type}</p>
                </div>
                <p className="text-slate-600 text-sm mb-4 line-clamp-3">{job.requirements}</p>
                <p className="text-slate-800 font-bold mb-4">💰 {job.salary}</p>
-               
                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
-                 <span className="text-xs font-bold text-slate-500 flex items-center">
-                   📍 {job.microdistrict || 'Aktau'}
-                 </span>
-                 {/* Hackathon Requirement 06: Apply Flow */}
-                 <a 
-                   href={`https://t.me/${job.telegram_contact?.replace('@', '')}`} 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center transition-colors shadow-sm"
-                 >
-                   Откликнуться (Apply)
-                 </a>
+                 <span className="text-xs font-bold text-slate-500">📍 {job.microdistrict || 'Aktau'}</span>
+                 <a href={`https://t.me/${job.telegram_contact?.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center transition-colors shadow-sm">Откликнуться (Apply)</a>
                </div>
              </div>
           ))}
@@ -153,52 +149,40 @@ export default function Feed() {
             <div key={`profile-${index}`} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow flex flex-col">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl border-2 border-blue-50">
-                    {profile.full_name ? profile.full_name.charAt(0).toUpperCase() : '?'}
-                  </div>
+                  {/* === NEW: SHOW PHOTO IF IT EXISTS, OTHERWISE SHOW INITIAL === */}
+                  {profile.photo_data ? (
+                     <img src={profile.photo_data} alt="Profile" className="w-12 h-12 rounded-full object-cover border-2 border-blue-100" />
+                  ) : (
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl border-2 border-blue-50">
+                      {profile.full_name ? profile.full_name.charAt(0).toUpperCase() : '?'}
+                    </div>
+                  )}
                   <div className="ml-4">
                     <h3 className="font-bold text-lg text-slate-900 leading-tight">{profile.full_name}</h3>
                     <p className="text-blue-600 text-sm font-semibold">{profile.title}</p>
+                    <p className="text-slate-400 text-xs mt-0.5 font-bold">{profile.industry} • {profile.employment_type}</p>
                   </div>
                 </div>
               </div>
-              
               <div className="mb-4 flex-grow">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">AI Strengths</p>
                 <div className="flex flex-wrap gap-1.5">
                   {profile.ai_tags ? profile.ai_tags.split(',').map((tag: string, i: number) => (
-                    <span key={i} className="bg-blue-50 text-blue-700 border border-blue-100 text-[11px] px-2 py-1 rounded-md font-bold uppercase tracking-wide">
-                      {tag.trim()}
-                    </span>
+                    <span key={i} className="bg-blue-50 text-blue-700 border border-blue-100 text-[11px] px-2 py-1 rounded-md font-bold uppercase tracking-wide">{tag.trim()}</span>
                   )) : (
                     <span className="text-slate-400 text-xs italic">No tags generated.</span>
                   )}
                 </div>
               </div>
-
               <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
-                <span className="text-xs font-bold text-slate-500 flex items-center">
-                  📍 {profile.microdistrict || 'Aktau'}
-                </span>
-                <a 
-                  href={`https://t.me/${profile.telegram_username?.replace('@', '')}`} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center transition-colors shadow-sm"
-                >
-                  Contact
-                </a>
+                <span className="text-xs font-bold text-slate-500">📍 {profile.microdistrict || 'Aktau'}</span>
+                <a href={`https://t.me/${profile.telegram_username?.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center transition-colors shadow-sm">Contact</a>
               </div>
             </div>
           ))}
 
-          {/* Empty States */}
-          {activeTab === 'jobs' && displayedVacancies.length === 0 && !isLoading && (
-            <div className="col-span-full text-center p-10 text-slate-500 font-bold">No jobs found for this filter.</div>
-          )}
-          {activeTab === 'talent' && displayedProfiles.length === 0 && !isLoading && (
-            <div className="col-span-full text-center p-10 text-slate-500 font-bold">No talent found for this filter.</div>
-          )}
+          {activeTab === 'jobs' && displayedVacancies.length === 0 && !isLoading && <div className="col-span-full text-center p-10 text-slate-500 font-bold">No jobs found for this filter.</div>}
+          {activeTab === 'talent' && displayedProfiles.length === 0 && !isLoading && <div className="col-span-full text-center p-10 text-slate-500 font-bold">No talent found for this filter.</div>}
         </div>
       )}
     </div>
