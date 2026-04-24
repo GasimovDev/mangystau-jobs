@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 export default function App() {
   const [userType, setUserType] = useState('seeker'); 
   const [isLoading, setIsLoading] = useState(false);
+  const [isParsingCV, setIsParsingCV] = useState(false);
   const [successData, setSuccessData] = useState<any>(null);
   
   const [seekerData, setSeekerData] = useState({
@@ -27,6 +28,45 @@ export default function App() {
         setSeekerData(prev => ({ ...prev, photoBase64: reader.result as string }));
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCVUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsParsingCV(true);
+    const formData = new FormData();
+    formData.append('cv_file', file);
+
+    try {
+      const res = await fetch('/api/parse-cv', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: res.statusText }));
+        alert(`Error parsing CV: ${err.error || res.statusText}`);
+        return;
+      }
+
+      const parsedData = await res.json();
+      
+      setSeekerData(prev => ({
+        ...prev,
+        name: parsedData.full_name || prev.name,
+        title: parsedData.title || prev.title,
+        skills: parsedData.skills || prev.skills,
+        bio: parsedData.bio || prev.bio,
+      }));
+      
+      alert("✨ Magic AI Autofill Complete!");
+    } catch (error) {
+      console.error("CV Upload failed:", error);
+      alert("Network Error: Could not reach the CV parsing service.");
+    } finally {
+      setIsParsingCV(false);
     }
   };
     
@@ -149,6 +189,16 @@ export default function App() {
                 </div>
               )}
 
+              {userType === 'seeker' && (successData?.telegram_username || seekerData.telegram) && (
+                <button 
+                  onClick={() => window.location.href = `/profile/${(successData?.telegram_username || seekerData.telegram).replace('@', '')}`} 
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center mb-4"
+                >
+                  View Your Profile 
+                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </button>
+              )}
+
               <button 
                 onClick={() => window.location.href = '/feed'} 
                 className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center"
@@ -181,6 +231,30 @@ export default function App() {
               {userType === 'seeker' ? (
                 // === SEEKER FORM (UNCHANGED) ===
                 <div className="space-y-5">
+                  <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div>
+                      <h3 className="font-bold text-blue-900 flex items-center gap-2">
+                        ✨ Magic AI Autofill
+                      </h3>
+                      <p className="text-sm text-blue-700 mt-1">Upload your CV image (JPEG/PNG) and let our AI fill out your profile automatically.</p>
+                    </div>
+                    <div className="relative">
+                      <input 
+                        type="file" 
+                        accept="image/jpeg, image/png" 
+                        onChange={handleCVUpload}
+                        disabled={isParsingCV}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed" 
+                      />
+                      <button 
+                        disabled={isParsingCV}
+                        className={`bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all ${isParsingCV ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-700'}`}
+                      >
+                        {isParsingCV ? 'Parsing...' : 'Upload CV Image'}
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                      <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
