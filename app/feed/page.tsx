@@ -133,7 +133,10 @@ export default function Feed() {
                  <span className="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">Hiring Now</span>
                  <h3 className="font-bold text-xl text-slate-900 leading-tight">{job.job_title}</h3>
                  <p className="text-emerald-600 font-semibold">{job.company_name}</p>
-                 <p className="text-slate-400 text-xs mt-1 font-bold">{job.industry} • {job.employment_type}</p>
+                 {/* THIS SHOWS THE TYPE UNDER THE JOB */}
+                 <p className="text-slate-500 text-xs mt-1 font-bold bg-slate-100 inline-block px-2 py-0.5 rounded-md">
+                    {job.industry || 'Unknown'} • {job.employment_type || 'Full-time'}
+                 </p>
                </div>
                <p className="text-slate-600 text-sm mb-4 line-clamp-3">{job.requirements}</p>
                <p className="text-slate-800 font-bold mb-4">💰 {job.salary}</p>
@@ -160,7 +163,10 @@ export default function Feed() {
                   <div className="ml-4">
                     <h3 className="font-bold text-lg text-slate-900 leading-tight">{profile.full_name}</h3>
                     <p className="text-blue-600 text-sm font-semibold">{profile.title}</p>
-                    <p className="text-slate-400 text-xs mt-0.5 font-bold">{profile.industry} • {profile.employment_type}</p>
+                    {/* THIS SHOWS THE TYPE UNDER THE NAME */}
+                    <p className="text-slate-500 text-xs mt-1 font-bold bg-slate-100 inline-block px-2 py-0.5 rounded-md">
+                      {profile.industry || 'Unknown'} • {profile.employment_type || 'Full-time'}
+                    </p>
                   </div>
                 </div>
               </div>
