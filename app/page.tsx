@@ -29,9 +29,9 @@ export default function App() {
   const handleEmployerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => 
     setEmployerData({ ...employerData, [e.target.name]: e.target.value });
 
-  // === UPDATED SUBMIT FUNCTION ===
+ // === FULLY ACTIVE SUBMIT FUNCTION ===
   const handleSubmit = async () => {
-    // We map our frontend state to the EXACT keys Ferhad's backend expects
+    // 1. Map data to Ferhad's exact keys
     const payload = userType === 'seeker' ? {
         full_name: seekerData.name,
         title: seekerData.title,
@@ -48,29 +48,32 @@ export default function App() {
         telegram_username: employerData.telegram
     };
 
-    const endpoint = userType === 'seeker' ? '/api/seekers' : '/api/employers';
-    const backendUrl = "REPLACE_WITH_FERHADS_URL" + endpoint; 
+    // 2. Put Ferhad's exact ngrok URL here!
+    // NOTE: Replace "your-ngrok-url" with the actual random words ngrok gave him!
+    const backendUrl = "https://your-ngrok-url.ngrok-free.app/profiles"; 
 
     try {
-      console.log("Mapped Payload for Ferhad:", payload);
+      console.log("Sending Payload:", payload);
 
-      /* UNCOMMENT WHEN URL IS READY
+      // 3. The actual API call to Ferhad's server
       const response = await fetch(backendUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true' // VERY IMPORTANT FOR NGROK!
+        },
         body: JSON.stringify(payload)
       });
 
       if (response.ok) {
-        alert("Profile Saved! AI Matching Activated.");
+        alert("Success! Profile Sent to Ferhad's AI.");
       } else {
-        alert("Error saving profile.");
+        alert("Error: Ferhad's server rejected the data. Tell him to check his terminal logs!");
       }
-      */
       
-      alert("Ready to send! Check the browser console (F12) to see the exact JSON format.");
     } catch (error) {
       console.error("Failed to fetch:", error);
+      alert("Network Error: Could not reach the backend. Is Ferhad's ngrok running?");
     }
   };
 
