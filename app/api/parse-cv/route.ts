@@ -17,7 +17,8 @@ export async function POST(request: Request) {
     
     // Create new FormData to send to backend
     const backendFormData = new FormData();
-    backendFormData.append('cv_file', file);
+    console.log(`Forwarding file: ${file.name}, size: ${file.size} bytes`);
+    backendFormData.append('cv_file', file, file.name);
 
     const response = await fetch(backendUrl, {
       method: 'POST',
