@@ -7,8 +7,8 @@ export default function App() {
   const [successData, setSuccessData] = useState<any>(null);
   
   const [seekerData, setSeekerData] = useState({
-  name: '', title: '', microdistrict: '', skills: '', bio: '', telegram: '', photoUrl: ''
-});
+    name: '', title: '', microdistrict: '', industry: 'Food & Beverage', type: 'Full-time', skills: '', bio: '', telegram: '', photoBase64: ''
+  });
 
   // === FIXED: MATCHING FERHAD'S DB EXACTLY ===
   const [employerData, setEmployerData] = useState({
@@ -17,6 +17,18 @@ export default function App() {
 
   const handleSeekerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => 
     setSeekerData({ ...seekerData, [e.target.name]: e.target.value });
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // This converts the image to a long text string!
+        setSeekerData(prev => ({ ...prev, photoBase64: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
     
   const handleEmployerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => 
     setEmployerData({ ...employerData, [e.target.name]: e.target.value });
@@ -29,6 +41,9 @@ export default function App() {
         full_name: seekerData.name,
         title: seekerData.title,
         microdistrict: seekerData.microdistrict,
+        industry: seekerData.industry,              
+        employment_type: seekerData.type,            
+        photo_data: seekerData.photoBase64,          
         skills: seekerData.skills,
         bio: seekerData.bio,
         telegram_username: seekerData.telegram
@@ -138,31 +153,56 @@ export default function App() {
               {userType === 'seeker' ? (
                 // === SEEKER FORM (UNCHANGED) ===
                 <div className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
-                    <input type="text" name="name" onChange={handleSeekerChange} placeholder="e.g., Arman Serikov" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
-                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                     <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
+                      <input type="text" name="name" onChange={handleSeekerChange} placeholder="e.g., Arman Serikov" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+                    </div>
+                     <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">CV Photo (Max 3x4 PNG/JPG)</label>
+                      {/* NEW FILE UPLOAD */}
+                      <input type="file" accept="image/png, image/jpeg" onChange={handlePhotoUpload} className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Desired Role</label>
                       <input type="text" name="title" onChange={handleSeekerChange} placeholder="e.g., Barista" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                     </div>
                     <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Industry</label>
+                      <select name="industry" value={seekerData.industry} onChange={handleSeekerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
+                        <option value="Food & Beverage">Food & Beverage</option>
+                        <option value="IT & Tech">IT & Tech</option>
+                        <option value="Retail & Sales">Retail & Sales</option>
+                      </select>
+                    </div>
+                     <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Type</label>
+                      <select name="type" value={seekerData.type} onChange={handleSeekerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
                       <label className="block text-sm font-bold text-slate-700 mb-1.5">Microdistrict</label>
-                      <select name="microdistrict" onChange={handleSeekerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
+                      <select name="microdistrict" value={seekerData.microdistrict} onChange={handleSeekerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
                         <option value="">Select location...</option>
                         <option value="14th">14th Microdistrict</option>
                         <option value="15th">15th Microdistrict</option>
                         <option value="27th">27th Microdistrict</option>
-                        <option value="Other">Other (Aktau)</option>
+                        <option value="Seafront">Seafront</option>
                       </select>
                     </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Username</label>
-                    <div className="relative">
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">@</span>
-                      <input type="text" name="telegram" onChange={handleSeekerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Username</label>
+                      <div className="relative">
+                        <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">@</span>
+                        <input type="text" name="telegram" onChange={handleSeekerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
+                      </div>
                     </div>
                   </div>
                   <div>
@@ -172,10 +212,6 @@ export default function App() {
                   <div>
                     <label className="block text-sm font-bold text-slate-700 mb-1.5">Motivation Letter (Почему мы должны выбрать вас?)</label>
                     <textarea name="bio" onChange={handleSeekerChange} rows={4} placeholder="Describe why you are the best fit for this role..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Profile Photo URL (Optional)</label>
-                    <input type="url" name="photoUrl" onChange={handleSeekerChange} placeholder="https://link-to-your-photo.com/img.jpg" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                   </div>
                 </div>
               ) : (
