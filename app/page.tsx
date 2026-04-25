@@ -148,6 +148,9 @@ export default function App() {
         const result = await response.json();
         const finalData = Array.isArray(result.data) ? result.data[0] : (result.data || result);
         setSuccessData(finalData); 
+        
+        // Attempt to automatically open the Telegram channel in a new tab
+        window.open('https://t.me/mangystau_jobs', '_blank');
       } else {
         const errorText = await response.text();
         alert(`Server Error! Press F12. Logs: ${errorText}`);
@@ -203,6 +206,16 @@ export default function App() {
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </button>
               )}
+
+              <a 
+                href="https://t.me/mangystau_jobs" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center mb-4"
+              >
+                Join Our Telegram Channel
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+              </a>
 
               <button 
                 onClick={() => window.location.href = '/feed'} 
