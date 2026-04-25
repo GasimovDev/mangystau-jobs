@@ -108,9 +108,18 @@ export default function ProfilePage() {
               href={`https://t.me/${profile.telegram_username?.replace('@', '')}`} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 rounded-xl flex items-center justify-center transition-all shadow-lg"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 rounded-xl flex items-center justify-center transition-all shadow-lg mb-4"
             >
               Contact on Telegram
+            </a>
+
+            <a 
+              href="https://t.me/KaspianJobAnnouncements" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-sky-500 hover:bg-sky-600 text-white text-lg font-bold py-4 rounded-xl flex items-center justify-center transition-all shadow-lg"
+            >
+              Join Our Telegram Channel
             </a>
           </div>
         </div>

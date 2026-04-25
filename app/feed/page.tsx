@@ -113,6 +113,12 @@ export default function Feed() {
               <option value="Seafront">Seafront</option>
             </select>
 
+          <a 
+            href="https://t.me/KaspianJobAnnouncements" target="_blank" rel="noopener noreferrer"
+            className="bg-sky-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-sky-600 transition-all text-sm shadow-sm flex items-center"
+          >
+            Join Telegram
+          </a>
           <button 
             onClick={() => window.location.href = '/'}
             className="bg-slate-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-slate-800 transition-all text-sm shadow-sm"
