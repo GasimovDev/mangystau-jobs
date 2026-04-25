@@ -21,6 +21,19 @@ export default function Feed() {
   const [filterIndustry, setFilterIndustry] = useState('All');
   const [filterType, setFilterType] = useState('All');
 
+  const formatSalary = (salary: any) => {
+    if (!salary) return t('negotiable');
+    let s = String(salary).trim();
+    if (s.includes(',') || s.includes('.')) {
+        return s.includes('₸') || s.toLowerCase().includes('kzt') || s.toLowerCase().includes('т') ? s : `${s} ₸`;
+    }
+    s = s.replace(/\d+/g, m => Number(m).toLocaleString('ru-RU'));
+    if (!s.includes('₸') && !s.toLowerCase().includes('kzt') && !s.toLowerCase().includes('т')) {
+        s += ' ₸';
+    }
+    return s;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -180,7 +193,7 @@ export default function Feed() {
                </div>
                <p className="text-slate-600 text-sm mb-4 line-clamp-3">{job.requirements}</p>
                <p className="text-slate-800 font-bold text-lg mb-4">
-                💰 {job.salary ? (String(job.salary).replace(/\d+/g, m => Number(m).toLocaleString('ru-RU')) + (String(job.salary).includes('₸') ? '' : ' ₸')) : t('negotiable')}
+                💰 {formatSalary(job.salary)}
                </p>
                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
                  <a 
