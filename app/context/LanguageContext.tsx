@@ -122,14 +122,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     return translations[key][language];
   };
 
-  // Prevent hydration mismatch by returning nothing until mounted
-  if (!mounted) {
-    return <div style={{ visibility: 'hidden' }}>{children}</div>;
-  }
-
   return (
     <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
-      {children}
+      <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
+        {children}
+      </div>
     </LanguageContext.Provider>
   );
 };
