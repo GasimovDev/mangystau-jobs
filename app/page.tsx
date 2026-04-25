@@ -22,8 +22,12 @@ export default function App() {
     companyName: '', industry: 'Food & Beverage', type: 'Full-time', microdistrict: '', jobTitle: '', requirements: '', salary: '', telegram: ''
   });
 
-  const handleSeekerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => 
+  const handleSeekerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    if (e.target.name === 'bio') {
+      setHumanityScore(null);
+    }
     setSeekerData({ ...seekerData, [e.target.name]: e.target.value });
+  };
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
