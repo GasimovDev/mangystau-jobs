@@ -64,7 +64,7 @@ const translations: Translations = {
   jobRequirements: { en: "Job Requirements", ru: "Требования к работе" },
   
   // Feed page
-  liveFeed: { en: "Live Feed", ru: "Живая Лента" },
+  liveFeed: { en: "Live", ru: "Live" },
   smartMatching: { en: "AI-powered job matching. Upload your CV and let the magic happen.", ru: "ИИ-подбор кадров. Загрузите резюме и позвольте магии случиться." },
   allLocations: { en: "All Locations", ru: "Все локации" },
   addNew: { en: "+ Add New", ru: "+ Добавить" },
