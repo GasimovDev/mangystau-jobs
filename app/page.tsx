@@ -278,13 +278,13 @@ export default function App() {
                 <div className="flex bg-slate-200 p-1.5 rounded-xl w-full md:w-fit overflow-x-auto">
                   <button 
                     onClick={() => setUserType('seeker')}
-                    className={`flex items-center justify-center whitespace-nowrap px-4 md:px-6 py-2.5 rounded-lg font-semibold text-sm transition-all flex-1 md:flex-none ${userType === 'seeker' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`flex items-center justify-center whitespace-nowrap px-4 md:px-6 py-2.5 rounded-lg font-bold text-sm transition-all flex-1 md:flex-none border ${userType === 'seeker' ? 'bg-blue-600 text-white shadow-md border-blue-600' : 'bg-transparent text-slate-500 hover:text-slate-700 border-transparent'}`}
                   >
                     {t('lookingForWork')}
                   </button>
                   <button 
                     onClick={() => setUserType('employer')}
-                    className={`flex items-center justify-center whitespace-nowrap px-4 md:px-6 py-2.5 rounded-lg font-semibold text-sm transition-all flex-1 md:flex-none ${userType === 'employer' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`flex items-center justify-center whitespace-nowrap px-4 md:px-6 py-2.5 rounded-lg font-bold text-sm transition-all flex-1 md:flex-none border ${userType === 'employer' ? 'bg-emerald-600 text-white shadow-md border-emerald-600' : 'bg-transparent text-slate-500 hover:text-slate-700 border-transparent'}`}
                   >
                     {t('amEmployer')}
                   </button>

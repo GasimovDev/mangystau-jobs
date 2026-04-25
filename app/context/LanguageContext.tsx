@@ -49,7 +49,7 @@ const translations: Translations = {
   successSaved: { en: "Data Saved Successfully!", ru: "Данные успешно сохранены!" },
   successAI: { en: "Your information has been processed by our AI matching engine.", ru: "Ваша информация обработана нашим ИИ." },
   aiStrengths: { en: "AI Generated Strengths", ru: "Навыки, выделенные ИИ" },
-  joinTelegram: { en: "Join Our Telegram Channel", ru: "Присоединяйтесь к Telegram каналу" },
+  joinTelegram: { en: "Join Telegram", ru: "Наш Telegram" },
   viewProfile: { en: "View Your Profile", ru: "Посмотреть ваш профиль" },
   goFeed: { en: "Go to the Live Feed", ru: "Перейти к ленте" },
   
