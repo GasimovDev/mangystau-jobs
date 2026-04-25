@@ -53,6 +53,16 @@ const translations: Translations = {
   viewProfile: { en: "View Your Profile", ru: "Посмотреть ваш профиль" },
   goFeed: { en: "Go to the Live Feed", ru: "Перейти к ленте" },
   
+  // New keys for page.tsx
+  lookingForWork: { en: "I'm looking for work", ru: "Я ищу работу" },
+  amEmployer: { en: "I'm an Employer", ru: "Я работодатель" },
+  buildProfile: { en: "Build Your Profile", ru: "Создать профиль" },
+  postVacancy: { en: "Post a Vacancy", ru: "Разместить вакансию" },
+  saveProfile: { en: "Save Profile & Activate AI Matching", ru: "Сохранить профиль и активировать ИИ" },
+  processing: { en: "🤖 Processing...", ru: "🤖 Обработка..." },
+  monthlySalary: { en: "Monthly Salary (KZT)", ru: "Ежемесячная зарплата (KZT)" },
+  jobRequirements: { en: "Job Requirements", ru: "Требования к работе" },
+  
   // Feed page
   liveFeed: { en: "Live Feed", ru: "Живая Лента" },
   smartMatching: { en: "Smart matching for Aktau youth and small business.", ru: "Умный подбор кадров для молодежи Актау и малого бизнеса." },

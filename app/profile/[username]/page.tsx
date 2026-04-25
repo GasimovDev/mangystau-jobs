@@ -1,8 +1,10 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function ProfilePage() {
+  const { t } = useLanguage();
   const params = useParams();
   const username = params.username as string;
 
@@ -47,17 +49,17 @@ export default function ProfilePage() {
       {isLoading ? (
         <div className="flex flex-col items-center justify-center py-20 text-slate-400">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="font-bold animate-pulse">Loading Profile...</p>
+          <p className="font-bold animate-pulse">{t('loadingProfile')}</p>
         </div>
       ) : error ? (
         <div className="text-center">
           <div className="bg-red-50 text-red-600 p-6 rounded-2xl border border-red-200 text-center font-bold mb-4">⚠️ {error}</div>
-          <button onClick={() => window.location.href = '/feed'} className="bg-slate-900 text-white px-6 py-2 rounded-lg font-bold">Back to Feed</button>
+          <button onClick={() => window.location.href = '/feed'} className="bg-slate-900 text-white px-6 py-2 rounded-lg font-bold">{t('backToFeed')}</button>
         </div>
       ) : profile ? (
         <div className="w-full max-w-2xl bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 relative">
           <button onClick={() => window.location.href = '/feed'} className="absolute top-6 left-6 text-slate-400 hover:text-slate-600 font-bold text-sm">
-            ← Back
+            {t('back')}
           </button>
           
           <div className="flex flex-col items-center text-center mt-6">
@@ -86,7 +88,7 @@ export default function ProfilePage() {
 
             {profile.ai_tags && (
               <div className="w-full bg-blue-50 rounded-2xl p-6 border border-blue-100 text-left mb-8">
-                <p className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-3">AI Verified Strengths</p>
+                <p className="text-xs font-bold text-blue-400 uppercase tracking-wider mb-3">{t('aiVerified')}</p>
                 <div className="flex flex-wrap gap-2">
                   {profile.ai_tags.split(',').map((tag: string, i: number) => (
                     <span key={i} className="bg-white text-blue-700 border border-blue-200 px-3 py-1.5 rounded-lg font-bold text-xs shadow-sm">
@@ -98,9 +100,9 @@ export default function ProfilePage() {
             )}
 
             <div className="w-full text-left mb-10">
-              <h3 className="font-bold text-lg text-slate-900 mb-3">Motivation & Bio</h3>
+              <h3 className="font-bold text-lg text-slate-900 mb-3">{t('motivationBio')}</h3>
               <p className="text-slate-600 leading-relaxed bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                {profile.bio || "This user hasn't written a bio yet."}
+                {profile.bio || t('noBio')}
               </p>
             </div>
 
@@ -110,7 +112,7 @@ export default function ProfilePage() {
               rel="noopener noreferrer" 
               className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold py-4 rounded-xl flex items-center justify-center transition-all shadow-lg mb-4"
             >
-              Contact on Telegram
+              {t('contactTelegram')}
             </a>
 
             <a 
@@ -119,7 +121,7 @@ export default function ProfilePage() {
               rel="noopener noreferrer"
               className="w-full bg-sky-500 hover:bg-sky-600 text-white text-lg font-bold py-4 rounded-xl flex items-center justify-center transition-all shadow-lg"
             >
-              Join Our Telegram Channel
+              {t('joinTelegram')}
             </a>
           </div>
         </div>

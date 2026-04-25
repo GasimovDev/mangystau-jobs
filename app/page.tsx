@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from 'react';
 import LanguageToggle from './components/LanguageToggle';
+import { useLanguage } from './context/LanguageContext';
 
 export default function App() {
+  const { t } = useLanguage();
   const [userType, setUserType] = useState('seeker'); 
   const [isLoading, setIsLoading] = useState(false);
   const [isParsingCV, setIsParsingCV] = useState(false);
@@ -171,7 +173,7 @@ export default function App() {
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
             Aktau<span className="text-blue-600">Match</span>
           </h1>
-          <p className="text-slate-500 mb-6 font-medium">Create your smart profile. Skip the CV. Get hired today.</p>
+          <p className="text-slate-500 mb-6 font-medium">{t('createProfile')}</p>
         </div>
         <LanguageToggle />
       </div>
@@ -184,13 +186,13 @@ export default function App() {
               <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6 text-emerald-500 border-4 border-emerald-50">
                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
               </div>
-              <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Data Saved Successfully!</h2>
-              <p className="text-slate-500 font-medium mb-8">Your information has been processed by our AI matching engine.</p>
+              <h2 className="text-3xl font-extrabold text-slate-900 mb-2">{t('successSaved')}</h2>
+              <p className="text-slate-500 font-medium mb-8">{t('successAI')}</p>
               
               {/* Only show AI tags if it's a Seeker (Employers might not have tags depending on Ferhad's code) */}
               {successData.ai_tags && (
                 <div className="w-full bg-slate-50 rounded-2xl p-6 border border-slate-100 text-left mb-8">
-                  <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">AI Generated Strengths</p>
+                  <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">{t('aiStrengths')}</p>
                   <div className="flex flex-wrap gap-2">
                     {successData.ai_tags.split(',').map((tag: string, i: number) => (
                       <span key={i} className="bg-blue-100 text-blue-700 border border-blue-200 px-4 py-2 rounded-xl font-bold text-sm shadow-sm">
@@ -206,7 +208,7 @@ export default function App() {
                   onClick={() => window.location.href = `/profile/${(successData?.telegram_username || seekerData.telegram).replace('@', '')}`} 
                   className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center mb-4"
                 >
-                  View Your Profile 
+                  {t('viewProfile')}
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </button>
               )}
@@ -217,7 +219,7 @@ export default function App() {
                 rel="noopener noreferrer"
                 className="bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center mb-4"
               >
-                Join Our Telegram Channel
+                {t('joinTelegram')}
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
               </a>
 
@@ -225,7 +227,7 @@ export default function App() {
                 onClick={() => window.location.href = '/feed'} 
                 className="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center"
               >
-                Go to the Live Feed 
+                {t('goFeed')}
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </button>
             </div>
@@ -236,18 +238,18 @@ export default function App() {
                   onClick={() => setUserType('seeker')}
                   className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'seeker' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
                 >
-                  I'm looking for work
+                  {t('lookingForWork')}
                 </button>
                 <button 
                   onClick={() => setUserType('employer')}
                   className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'employer' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
                 >
-                  I'm an Employer
+                  {t('amEmployer')}
                 </button>
               </div>
 
               <h2 className="text-2xl font-bold mb-8 text-slate-800">
-                {userType === 'seeker' ? 'Build Your Profile' : 'Post a Vacancy'}
+                {userType === 'seeker' ? t('buildProfile') : t('postVacancy')}
               </h2>
 
               {userType === 'seeker' ? (
@@ -256,9 +258,9 @@ export default function App() {
                   <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
                     <div>
                       <h3 className="font-bold text-blue-900 flex items-center gap-2">
-                        ✨ Magic AI Autofill
+                        {t('magicAI')}
                       </h3>
-                      <p className="text-sm text-blue-700 mt-1">Upload your CV (PDF/JPEG/PNG) and let our AI fill out your profile automatically.</p>
+                      <p className="text-sm text-blue-700 mt-1">{t('uploadCV')}</p>
                     </div>
                     <div className="relative">
                       <input 
@@ -272,18 +274,18 @@ export default function App() {
                         disabled={isParsingCV}
                         className={`bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-sm transition-all ${isParsingCV ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-700'}`}
                       >
-                        {isParsingCV ? 'Parsing...' : 'Upload CV'}
+                        {isParsingCV ? t('parsing') : t('uploadCVBtn')}
                       </button>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Full Name</label>
+                    <div>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('fullName')}</label>
                       <input type="text" name="name" value={seekerData.name} onChange={handleSeekerChange} placeholder="e.g., Arman Serikov" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                     </div>
                      <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">CV Photo (Max 3x4 PNG/JPG)</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('cvPhoto')}</label>
                       {/* NEW FILE UPLOAD */}
                       <input type="file" accept="image/png, image/jpeg" onChange={handlePhotoUpload} className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200" />
                     </div>
@@ -291,38 +293,38 @@ export default function App() {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Desired Role</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('desiredRole')}</label>
                       <input type="text" name="title" value={seekerData.title} onChange={handleSeekerChange} placeholder="e.g., Barista" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Industry</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('industry')}</label>
                       <select name="industry" value={seekerData.industry} onChange={handleSeekerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
-                        <option value="Food & Beverage">Food & Beverage</option>
-                        <option value="IT & Tech">IT & Tech</option>
-                        <option value="Retail & Sales">Retail & Sales</option>
+                        <option value="Food & Beverage">{t('foodBev')}</option>
+                        <option value="IT & Tech">{t('itTech')}</option>
+                        <option value="Retail & Sales">{t('retailSales')}</option>
                       </select>
                     </div>
                      <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Type</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('type')}</label>
                       <select name="type" value={seekerData.type} onChange={handleSeekerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
-                        <option value="Full-time">Full-time</option>
-                        <option value="Part-time">Part-time</option>
+                        <option value="Full-time">{t('fullTime')}</option>
+                        <option value="Part-time">{t('partTime')}</option>
                       </select>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Microdistrict</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('microdistrict')}</label>
                       <select name="microdistrict" value={seekerData.microdistrict} onChange={handleSeekerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none">
-                        <option value="">Select location...</option>
-                        <option value="14th">14th Microdistrict</option>
-                        <option value="15th">15th Microdistrict</option>
-                        <option value="27th">27th Microdistrict</option>
-                        <option value="Seafront">Seafront</option>
+                        <option value="">{t('selectLocation')}</option>
+                        <option value="14th">{t('fourteenth')}</option>
+                        <option value="15th">{t('fifteenth')}</option>
+                        <option value="27th">{t('twentySeventh')}</option>
+                        <option value="Seafront">{t('seafront')}</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Username</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('telegramUsername')}</label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">@</span>
                         <input type="text" name="telegram" value={seekerData.telegram} onChange={handleSeekerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
@@ -330,12 +332,12 @@ export default function App() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Top Skills (comma separated)</label>
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('topSkills')}</label>
                     <input type="text" name="skills" value={seekerData.skills} onChange={handleSeekerChange} placeholder="Latte Art, Fluent English, Fast Paced" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all" />
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Motivation Letter (Почему мы должны выбрать вас?)</label>
-                    <textarea name="bio" value={seekerData.bio} onChange={handleSeekerChange} rows={4} placeholder="Describe why you are the best fit for this role..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('motivationLetter')}</label>
+                    <textarea name="bio" value={seekerData.bio} onChange={handleSeekerChange} rows={4} placeholder="..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
                   </div>
                 </div>
               ) : (
@@ -343,47 +345,47 @@ export default function App() {
                 <div className="space-y-5">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Company Name</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('companyName')}</label>
                       <input type="text" name="companyName" onChange={handleEmployerChange} placeholder="e.g., OceanView Cafe" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Industry</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('industry')}</label>
                       <select name="industry" value={employerData.industry} onChange={handleEmployerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none">
-                        <option value="Food & Beverage">Food & Beverage</option>
-                        <option value="IT & Tech">IT & Tech</option>
-                        <option value="Retail & Sales">Retail & Sales</option>
+                        <option value="Food & Beverage">{t('foodBev')}</option>
+                        <option value="IT & Tech">{t('itTech')}</option>
+                        <option value="Retail & Sales">{t('retailSales')}</option>
                       </select>
                     </div>
                      <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Type</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('type')}</label>
                       <select name="type" value={employerData.type} onChange={handleEmployerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none">
-                        <option value="Full-time">Full-time</option>
-                        <option value="Part-time">Part-time</option>
+                        <option value="Full-time">{t('fullTime')}</option>
+                        <option value="Part-time">{t('partTime')}</option>
                       </select>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Job Title</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('jobTitle')}</label>
                       <input type="text" name="jobTitle" onChange={handleEmployerChange} placeholder="e.g., Barista needed" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Microdistrict</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('microdistrict')}</label>
                       <select name="microdistrict" onChange={handleEmployerChange} className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all appearance-none">
-                        <option value="">Select location...</option>
-                        <option value="14th">14th Microdistrict</option>
-                        <option value="15th">15th Microdistrict</option>
-                        <option value="Seafront">Aktau Seafront</option>
+                        <option value="">{t('selectLocation')}</option>
+                        <option value="14th">{t('fourteenth')}</option>
+                        <option value="15th">{t('fifteenth')}</option>
+                        <option value="Seafront">{t('seafront')}</option>
                       </select>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                      <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Monthly Salary (KZT)</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('monthlySalary')}</label>
                       <input type="number" name="salary" onChange={handleEmployerChange} placeholder="e.g., 200,000 KZT" className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
                     </div>
                     <div>
-                      <label className="block text-sm font-bold text-slate-700 mb-1.5">Telegram Contact</label>
+                      <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('hrTelegram')}</label>
                       <div className="relative">
                         <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 font-bold">@</span>
                         <input type="text" name="telegram" onChange={handleEmployerChange} placeholder="username" className="w-full p-3.5 pl-8 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all" />
@@ -391,8 +393,8 @@ export default function App() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-bold text-slate-700 mb-1.5">Job Requirements</label>
-                    <textarea name="requirements" onChange={handleEmployerChange} rows={3} placeholder="What are the daily tasks and required skills?..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all resize-none"></textarea>
+                    <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('jobRequirements')}</label>
+                    <textarea name="requirements" onChange={handleEmployerChange} rows={3} placeholder="..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all resize-none"></textarea>
                   </div>
                 </div>
               )}
@@ -404,7 +406,7 @@ export default function App() {
                 ${userType === 'seeker' ? 'bg-blue-600 shadow-blue-200' : 'bg-emerald-600 shadow-emerald-200'} 
                 ${isLoading ? 'opacity-70 cursor-not-allowed animate-pulse' : ''}`}
               >
-                {isLoading ? '🤖 Processing...' : 'Save Profile & Activate AI Matching'}
+                {isLoading ? t('processing') : t('saveProfile')}
               </button>
             </div>
           )}
