@@ -73,7 +73,7 @@ Do NOT wrap the output in markdown code blocks like \`\`\`json. Return ONLY the 
       return NextResponse.json({ error: 'File is too large.' }, { status: 413 });
     }
 
-    if (error?.message?.includes('429') || error?.message?.includes('quota')) {
+    if (error?.message?.includes('429') || error?.message?.toLowerCase().includes('quota')) {
       return NextResponse.json({ error: 'AI Rate Limit Exceeded: Please wait 1 minute before trying again.' }, { status: 429 });
     }
 
