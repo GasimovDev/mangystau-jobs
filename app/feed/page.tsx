@@ -83,18 +83,20 @@ export default function Feed() {
             <p className="text-slate-500 font-medium">{t('smartMatching')}</p>
           </div>
           
-          <div className="flex flex-wrap items-center gap-4">
-            <LanguageToggle />
+          <div className="flex flex-wrap sm:flex-nowrap items-center w-full md:w-auto gap-3 md:gap-4">
+            <div className="flex-shrink-0 mb-2 sm:mb-0">
+              <LanguageToggle />
+            </div>
             <div className="h-8 w-px bg-slate-200 hidden md:block"></div>
             <a 
               href="https://t.me/KaspianJobAnnouncements" target="_blank" rel="noopener noreferrer"
-              className="bg-[#0088cc] hover:bg-[#007bb5] text-white px-5 py-2.5 rounded-xl font-bold transition-all text-sm shadow-sm flex items-center"
+              className="flex-1 sm:flex-none justify-center bg-[#0088cc] hover:bg-[#007bb5] text-white px-4 py-2.5 rounded-xl font-bold transition-all text-sm shadow-sm flex items-center whitespace-nowrap"
             >
               {t('joinTelegram')}
             </a>
             <button 
               onClick={() => window.location.href = '/'}
-              className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-slate-800 transition-all text-sm shadow-md"
+              className="flex-1 sm:flex-none bg-slate-900 text-white px-4 py-2.5 rounded-xl font-bold hover:bg-slate-800 transition-all text-sm shadow-md whitespace-nowrap"
             >
               {t('addNew')}
             </button>
