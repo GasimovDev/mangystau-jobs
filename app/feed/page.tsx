@@ -73,80 +73,82 @@ export default function Feed() {
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-800">
-      <div className="max-w-6xl mx-auto mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div className="flex justify-between items-start w-full md:w-auto">
+      <div className="max-w-6xl mx-auto mb-8">
+        {/* TOP ROW: Title & Main Actions */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
               Mangy<span className="text-blue-600">Jobs</span> {t('liveFeed')}
             </h1>
             <p className="text-slate-500 font-medium">{t('smartMatching')}</p>
           </div>
-          <div className="md:hidden">
+          
+          <div className="flex flex-wrap items-center gap-4">
             <LanguageToggle />
+            <div className="h-8 w-px bg-slate-200 hidden md:block"></div>
+            <a 
+              href="https://t.me/KaspianJobAnnouncements" target="_blank" rel="noopener noreferrer"
+              className="bg-[#0088cc] hover:bg-[#007bb5] text-white px-5 py-2.5 rounded-xl font-bold transition-all text-sm shadow-sm flex items-center"
+            >
+              {t('joinTelegram')}
+            </a>
+            <button 
+              onClick={() => window.location.href = '/'}
+              className="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-slate-800 transition-all text-sm shadow-md"
+            >
+              {t('addNew')}
+            </button>
           </div>
         </div>
         
-        <div className="hidden md:block">
-          <LanguageToggle />
+        {/* BOTTOM ROW: Tabs & Filters unified in a sleek bar */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-white p-2 rounded-2xl shadow-sm border border-slate-200 gap-4">
+          
+          <div className="flex bg-slate-100 p-1 rounded-xl w-full lg:w-auto">
+            <button onClick={() => setActiveTab('jobs')} className={`flex-1 lg:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'jobs' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
+              {t('findJob')}
+            </button>
+            <button onClick={() => setActiveTab('talent')} className={`flex-1 lg:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'talent' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
+              {t('findTalent')}
+            </button>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 px-2 pb-2 lg:pb-0 w-full lg:w-auto">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1 hidden sm:block">Filter:</span>
+              <select 
+                value={filterIndustry}
+                onChange={(e) => setFilterIndustry(e.target.value)}
+                className="bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+              >
+                <option value="All">Industry (Сфера)</option>
+                <option value="Food & Beverage">{t('foodBev')}</option>
+                <option value="IT & Tech">{t('itTech')}</option>
+                <option value="Retail & Sales">{t('retailSales')}</option>
+              </select>
+              
+              <select 
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+              >
+                <option value="All">Type (Тип)</option>
+                <option value="Full-time">{t('fullTime')}</option>
+                <option value="Part-time">{t('partTime')}</option>
+              </select>
+
+              <select 
+                value={filterDistrict} 
+                onChange={(e) => setFilterDistrict(e.target.value)}
+                className="bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+              >
+                <option value="All">{t('allLocations')}</option>
+                <option value="14th">{t('fourteenth')}</option>
+                <option value="15th">{t('fifteenth')}</option>
+                <option value="27th">{t('twentySeventh')}</option>
+                <option value="Seafront">{t('seafront')}</option>
+              </select>
+          </div>
         </div>
-        
-        {/* === UPDATED DROPDOWNS (BOUND TO STATE) === */}
-        <div className="flex flex-wrap gap-3">
-            <select 
-              value={filterIndustry}
-              onChange={(e) => setFilterIndustry(e.target.value)}
-              className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-            >
-              <option value="All">Industry (Сфера)</option>
-              <option value="Food & Beverage">{t('foodBev')}</option>
-              <option value="IT & Tech">{t('itTech')}</option>
-              <option value="Retail & Sales">{t('retailSales')}</option>
-            </select>
-            
-            <select 
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-            >
-              <option value="All">Type (Тип)</option>
-              <option value="Full-time">{t('fullTime')}</option>
-              <option value="Part-time">{t('partTime')}</option>
-            </select>
-
-            <select 
-              value={filterDistrict} 
-              onChange={(e) => setFilterDistrict(e.target.value)}
-              className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-            >
-              <option value="All">{t('allLocations')}</option>
-              <option value="14th">{t('fourteenth')}</option>
-              <option value="15th">{t('fifteenth')}</option>
-              <option value="27th">{t('twentySeventh')}</option>
-              <option value="Seafront">{t('seafront')}</option>
-            </select>
-
-          <a 
-            href="https://t.me/KaspianJobAnnouncements" target="_blank" rel="noopener noreferrer"
-            className="bg-sky-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-sky-600 transition-all text-sm shadow-sm flex items-center"
-          >
-            {t('joinTelegram')}
-          </a>
-          <button 
-            onClick={() => window.location.href = '/'}
-            className="bg-slate-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-slate-800 transition-all text-sm shadow-sm"
-          >
-            {t('addNew')}
-          </button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto mb-8 flex bg-slate-200 p-1.5 rounded-xl w-fit">
-        <button onClick={() => setActiveTab('jobs')} className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'jobs' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}>
-          {t('findJob')}
-        </button>
-        <button onClick={() => setActiveTab('talent')} className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${activeTab === 'talent' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
-          {t('findTalent')}
-        </button>
       </div>
 
       {isLoading ? (
