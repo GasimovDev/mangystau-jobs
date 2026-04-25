@@ -77,7 +77,7 @@ export default function Feed() {
         <div className="flex justify-between items-start w-full md:w-auto">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-              Aktau<span className="text-blue-600">Match</span> {t('liveFeed')}
+              Mangy<span className="text-blue-600">Jobs</span> {t('liveFeed')}
             </h1>
             <p className="text-slate-500 font-medium">{t('smartMatching')}</p>
           </div>

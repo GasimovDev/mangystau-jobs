@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AktauMatch",
-  description: "Smart matching for Aktau youth and small business.",
+  title: "MangyJobs",
+  description: "Smart matching for Mangystau youth and small business.",
 };
 
 export default function RootLayout({

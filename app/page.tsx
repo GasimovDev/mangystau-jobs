@@ -214,7 +214,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 p-4 md:p-8">
       <div className="max-w-6xl mx-auto mb-8">
         <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-          Aktau<span className="text-blue-600">Match</span>
+          Mangy<span className="text-blue-600">Jobs</span>
         </h1>
         <p className="text-slate-500 mb-6 font-medium">{t('createProfile')}</p>
       </div>
@@ -488,7 +488,7 @@ export default function App() {
         
         {/* RIGHT COLUMN: IMAGE OVERRIDE */}
         <div className="lg:col-span-5 flex justify-center items-center">
-          <img src="/phone.png" alt="AktauMatch AI on Mobile" className="rounded-3xl shadow-lg w-full object-cover" />
+          <img src="/phone.png" alt="MangyJobs AI on Mobile" className="rounded-3xl shadow-lg w-full object-cover" />
         </div>
 
       </div>
