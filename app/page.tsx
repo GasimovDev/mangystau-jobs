@@ -98,6 +98,16 @@ export default function App() {
         alert(`Missing Seeker Fields: ${missing.join(", ")}`);
         return;
       }
+
+      if (humanityScore === null) {
+        alert(t('analyzeFirst'));
+        return;
+      }
+
+      if (humanityScore < 60) {
+        alert(t('humanityTooLow'));
+        return;
+      }
     } else {
       const missing = [];
       if (!employerData.companyName) missing.push("Company Name");

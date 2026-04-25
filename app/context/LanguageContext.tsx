@@ -65,6 +65,8 @@ const translations: Translations = {
   analyzeHumanity: { en: "Analyze Humanity", ru: "Анализ человечности" },
   humanityScore: { en: "Humanity Score", ru: "Показатель человечности" },
   bioTooShort: { en: "Bio is too short to analyze.", ru: "Текст слишком короткий для анализа." },
+  analyzeFirst: { en: "Please analyze your Humanity Score first!", ru: "Пожалуйста, сначала проанализируйте ваш показатель человечности!" },
+  humanityTooLow: { en: "Your Humanity Score is below 60%. Please rewrite your motivation letter to sound more authentic and human.", ru: "Ваш показатель человечности ниже 60%. Пожалуйста, перепишите письмо, чтобы оно звучало более естественно." },
   
   // Feed page
   liveFeed: { en: "Live", ru: "Live" },
