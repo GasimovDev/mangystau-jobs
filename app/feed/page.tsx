@@ -72,7 +72,7 @@ export default function Feed() {
   console.log("DATA FROM FERHAD:", profiles[0], vacancies[0]);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-white to-pink-50 p-4 md:p-8 font-sans text-slate-800">
+    <div className="min-h-screen bg-white p-4 md:p-8 font-sans text-slate-800">
       <div className="max-w-6xl mx-auto mb-8">
         {/* TOP ROW: Title & Main Actions */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">

@@ -211,7 +211,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-white to-pink-50 font-sans text-slate-800 p-4 md:p-8">
+    <div className="min-h-screen bg-white font-sans text-slate-800 p-4 md:p-8">
       <div className="max-w-6xl mx-auto mb-8">
         <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-2">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-600">Mangy</span>Jobs
