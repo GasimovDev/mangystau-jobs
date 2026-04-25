@@ -230,22 +230,24 @@ export default function App() {
             </div>
           ) : (
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 md:p-10">
-              <div className="flex justify-between items-center mb-8">
-                <div className="flex bg-slate-200 p-1.5 rounded-xl w-fit">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+                <div className="flex bg-slate-200 p-1.5 rounded-xl w-full md:w-fit overflow-x-auto">
                   <button 
                     onClick={() => setUserType('seeker')}
-                    className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'seeker' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`flex items-center justify-center whitespace-nowrap px-4 md:px-6 py-2.5 rounded-lg font-semibold text-sm transition-all flex-1 md:flex-none ${userType === 'seeker' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
                   >
                     {t('lookingForWork')}
                   </button>
                   <button 
                     onClick={() => setUserType('employer')}
-                    className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'employer' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
+                    className={`flex items-center justify-center whitespace-nowrap px-4 md:px-6 py-2.5 rounded-lg font-semibold text-sm transition-all flex-1 md:flex-none ${userType === 'employer' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
                   >
                     {t('amEmployer')}
                   </button>
                 </div>
-                <LanguageToggle />
+                <div className="self-end md:self-auto">
+                  <LanguageToggle />
+                </div>
               </div>
 
               <h2 className="text-2xl font-bold mb-8 text-slate-800">
