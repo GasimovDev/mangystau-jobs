@@ -211,10 +211,10 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 p-4 md:p-8">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-white to-pink-50 font-sans text-slate-800 p-4 md:p-8">
       <div className="max-w-6xl mx-auto mb-8">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-          Mangy<span className="text-blue-600">Jobs</span>
+        <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-2">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-600">Mangy</span>Jobs
         </h1>
         <p className="text-slate-500 mb-6 font-medium">{t('createProfile')}</p>
       </div>
@@ -223,7 +223,7 @@ export default function App() {
         
         <div className="lg:col-span-7">
           {successData ? (
-            <div className="bg-white rounded-3xl shadow-sm border border-emerald-100 p-8 md:p-12 flex flex-col items-center text-center animate-fade-in-up">
+            <div className="bg-white/60 backdrop-blur-2xl rounded-3xl shadow-xl border border-white/60 p-8 md:p-12 flex flex-col items-center text-center animate-fade-in-up">
               <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6 text-emerald-500 border-4 border-emerald-50">
                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
               </div>
@@ -273,7 +273,7 @@ export default function App() {
               </button>
             </div>
           ) : (
-            <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 md:p-10">
+            <div className="bg-white/60 backdrop-blur-2xl rounded-3xl shadow-xl border border-white/60 p-6 md:p-10">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div className="flex bg-slate-200 p-1.5 rounded-xl w-full md:w-fit overflow-x-auto">
                   <button 
@@ -390,7 +390,7 @@ export default function App() {
                         type="button" 
                         onClick={analyzeHumanity} 
                         disabled={isAnalyzingHumanity}
-                        className={`bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all shadow-sm flex items-center gap-2 ${isAnalyzingHumanity ? 'opacity-70 cursor-not-allowed' : ''}`}
+                        className={`bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all shadow-lg shadow-purple-500/30 flex items-center gap-2 border border-white/20 ${isAnalyzingHumanity ? 'opacity-70 cursor-not-allowed animate-pulse' : ''}`}
                       >
                         <span>🤖</span> {isAnalyzingHumanity ? t('processing') : t('analyzeHumanity')}
                       </button>
@@ -476,8 +476,8 @@ export default function App() {
               <button 
                 onClick={handleSubmit}
                 disabled={isLoading}
-                className={`w-full mt-10 text-white font-bold text-lg py-4 px-4 rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 
-                ${userType === 'seeker' ? 'bg-blue-600 shadow-blue-200' : 'bg-emerald-600 shadow-emerald-200'} 
+                className={`w-full mt-10 text-white font-bold text-lg py-4 px-4 rounded-xl transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5 border border-white/20
+                ${userType === 'seeker' ? 'bg-gradient-to-r from-violet-600 to-indigo-600 shadow-indigo-500/30' : 'bg-gradient-to-r from-fuchsia-600 to-pink-600 shadow-pink-500/30'} 
                 ${isLoading ? 'opacity-70 cursor-not-allowed animate-pulse' : ''}`}
               >
                 {isLoading ? t('processing') : t('saveProfile')}

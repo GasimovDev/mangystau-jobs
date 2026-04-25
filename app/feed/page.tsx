@@ -72,13 +72,13 @@ export default function Feed() {
   console.log("DATA FROM FERHAD:", profiles[0], vacancies[0]);
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-800">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-50 via-white to-pink-50 p-4 md:p-8 font-sans text-slate-800">
       <div className="max-w-6xl mx-auto mb-8">
         {/* TOP ROW: Title & Main Actions */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-              Mangy<span className="text-blue-600">Jobs</span> {t('liveFeed')}
+            <h1 className="text-4xl md:text-5xl font-black tracking-tight mb-2">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-indigo-600">Mangy</span>Jobs {t('liveFeed')}
             </h1>
             <p className="text-slate-500 font-medium">{t('smartMatching')}</p>
           </div>
@@ -102,7 +102,7 @@ export default function Feed() {
         </div>
         
         {/* BOTTOM ROW: Tabs & Filters unified in a sleek bar */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-white p-2 rounded-2xl shadow-sm border border-slate-200 gap-4">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-white/60 backdrop-blur-2xl p-2 rounded-2xl shadow-xl border border-white/60 gap-4">
           
           <div className="flex bg-slate-100 p-1 rounded-xl w-full lg:w-auto">
             <button onClick={() => setActiveTab('jobs')} className={`flex-1 lg:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'jobs' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
@@ -163,7 +163,7 @@ export default function Feed() {
           
           {/* === JOBS TAB === */}
           {activeTab === 'jobs' && displayedVacancies.map((job, index) => (
-             <div key={`job-${index}`} className="bg-white rounded-3xl p-6 shadow-sm border border-emerald-100 hover:shadow-md transition-shadow flex flex-col">
+             <div key={`job-${index}`} className="bg-white/60 backdrop-blur-2xl rounded-3xl p-6 shadow-xl border border-white/60 hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col">
                <div className="mb-4">
                  <span className="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">{t('hiringNow')}</span>
                  <h3 className="font-bold text-xl text-slate-900 leading-tight">{job.job_title}</h3>
@@ -177,7 +177,7 @@ export default function Feed() {
                <p className="text-slate-800 font-bold text-lg mb-4">
                 💰 {job.salary ? `${Number(job.salary).toLocaleString('ru-RU')} ₸` : t('negotiable')}
                </p>
-               <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
+               <div className="bg-white/50 p-3 rounded-xl border border-white/60 flex items-center justify-between mt-auto shadow-sm">
                  <a 
                    href={`https://2gis.kz/aktau/search/${encodeURIComponent(job.microdistrict || 'Aktau')}`} 
                    target="_blank" 
@@ -194,7 +194,7 @@ export default function Feed() {
 
           {/* === TALENT TAB === */}
           {activeTab === 'talent' && displayedProfiles.map((profile, index) => (
-            <div key={`profile-${index}`} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow flex flex-col">
+            <div key={`profile-${index}`} className="bg-white/60 backdrop-blur-2xl rounded-3xl p-6 shadow-xl border border-white/60 hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
                   {/* === NEW: SHOW PHOTO IF IT EXISTS, OTHERWISE SHOW INITIAL === */}
@@ -225,7 +225,7 @@ export default function Feed() {
                   )}
                 </div>
               </div>
-              <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
+              <div className="bg-white/50 p-3 rounded-xl border border-white/60 flex items-center justify-between mt-auto shadow-sm">
                 <span className="text-xs font-bold text-slate-500">📍 {profile.microdistrict || 'Aktau'}</span>
                 <div className="flex gap-2">
                   <a href={`/profile/${profile.telegram_username?.replace('@', '')}`} className="bg-white border border-blue-200 text-blue-600 hover:bg-blue-50 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors shadow-sm">{t('viewProfile')}</a>
