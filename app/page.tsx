@@ -8,6 +8,9 @@ export default function App() {
   const [userType, setUserType] = useState('seeker'); 
   const [isLoading, setIsLoading] = useState(false);
   const [isParsingCV, setIsParsingCV] = useState(false);
+  
+  const [humanityScore, setHumanityScore] = useState<number | null>(null);
+  const [isAnalyzingHumanity, setIsAnalyzingHumanity] = useState(false);
   const [successData, setSuccessData] = useState<any>(null);
   
   const [seekerData, setSeekerData] = useState({
@@ -163,6 +166,33 @@ export default function App() {
       alert("Network Error: Could not reach the backend.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const analyzeHumanity = async () => {
+    if (!seekerData.bio || seekerData.bio.trim().length < 10) {
+      alert(t('bioTooShort'));
+      return;
+    }
+    setIsAnalyzingHumanity(true);
+    setHumanityScore(null);
+    try {
+      const res = await fetch('/api/humanize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bio: seekerData.bio })
+      });
+      const data = await res.json();
+      if (res.ok && typeof data.humanity_score === 'number') {
+        setHumanityScore(data.humanity_score);
+      } else {
+        alert(data.error || 'Error analyzing humanity');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error analyzing humanity');
+    } finally {
+      setIsAnalyzingHumanity(false);
     }
   };
 
@@ -340,6 +370,34 @@ export default function App() {
                   <div>
                     <label className="block text-sm font-bold text-slate-700 mb-1.5">{t('motivationLetter')}</label>
                     <textarea name="bio" value={seekerData.bio} onChange={handleSeekerChange} rows={4} placeholder="..." className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"></textarea>
+                    
+                    <div className="mt-3 flex flex-col md:flex-row items-start md:items-center gap-4 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                      <button 
+                        type="button" 
+                        onClick={analyzeHumanity} 
+                        disabled={isAnalyzingHumanity}
+                        className={`bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all shadow-sm flex items-center gap-2 ${isAnalyzingHumanity ? 'opacity-70 cursor-not-allowed' : ''}`}
+                      >
+                        <span>🤖</span> {isAnalyzingHumanity ? t('processing') : t('analyzeHumanity')}
+                      </button>
+                      
+                      {humanityScore !== null && (
+                        <div className="flex-grow w-full md:w-auto">
+                          <div className="flex justify-between items-center mb-1">
+                            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{t('humanityScore')}</span>
+                            <span className={`text-sm font-bold ${humanityScore > 75 ? 'text-emerald-500' : humanityScore > 40 ? 'text-amber-500' : 'text-red-500'}`}>
+                              {humanityScore}%
+                            </span>
+                          </div>
+                          <div className="w-full bg-slate-100 rounded-full h-2">
+                            <div 
+                              className={`h-2 rounded-full transition-all duration-1000 ${humanityScore > 75 ? 'bg-emerald-500' : humanityScore > 40 ? 'bg-amber-500' : 'bg-red-500'}`} 
+                              style={{ width: `${humanityScore}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ) : (

@@ -62,6 +62,9 @@ const translations: Translations = {
   processing: { en: "🤖 Processing...", ru: "🤖 Обработка..." },
   monthlySalary: { en: "Monthly Salary (KZT)", ru: "Ежемесячная зарплата (KZT)" },
   jobRequirements: { en: "Job Requirements", ru: "Требования к работе" },
+  analyzeHumanity: { en: "Analyze Humanity", ru: "Анализ человечности" },
+  humanityScore: { en: "Humanity Score", ru: "Показатель человечности" },
+  bioTooShort: { en: "Bio is too short to analyze.", ru: "Текст слишком короткий для анализа." },
   
   // Feed page
   liveFeed: { en: "Live", ru: "Live" },
