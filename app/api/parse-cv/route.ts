@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
+import { GoogleGenAI } from '@google/genai';
 
 export async function POST(request: Request) {
   try {
-    // We use request.formData() to extract the file safely.
-    // In Next.js App Router, this will read into memory, so for very large files it might throw.
-    // If it throws, we catch it and return a 413 or 500.
     const formData = await request.formData();
     const file = formData.get('cv_file') as File | null;
 
@@ -12,40 +10,60 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No CV file provided' }, { status: 400 });
     }
 
-    // Proxy the request to Ferhad's backend
-    const backendUrl = "https://raven-companion-starboard.ngrok-free.dev/parse-cv";
-    
-    // Create new FormData to send to backend
-    const backendFormData = new FormData();
-    console.log(`Forwarding file: ${file.name}, size: ${file.size} bytes`);
-    backendFormData.append('cv_file', file, file.name);
-
-    const response = await fetch(backendUrl, {
-      method: 'POST',
-      headers: {
-        // ngrok headers
-        'ngrok-skip-browser-warning': 'true'
-      },
-      body: backendFormData,
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Backend Error Response:", errorText);
-      // Return a proper error instead of crashing the Next.js process
-      return NextResponse.json({ 
-        error: `Backend failed to parse CV: ${response.status}`, 
-        details: errorText 
-      }, { status: response.status === 413 ? 413 : 500 });
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+      return NextResponse.json({ error: 'GEMINI_API_KEY is not configured.' }, { status: 500 });
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    const ai = new GoogleGenAI({ apiKey });
+
+    // Convert the uploaded file to Base64
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const base64Data = buffer.toString('base64');
+    const mimeType = file.type || 'application/pdf';
+
+    const prompt = `You are an expert HR assistant. Extract the following information from the provided CV/Resume document.
+If you cannot find a specific piece of information, make a reasonable guess based on the context, or leave it blank if impossible.
+
+Return EXACTLY ONE JSON object with the following keys and string values:
+- "full_name": The candidate's full name.
+- "title": Their current or desired job title/role.
+- "skills": A comma-separated list of their top 3-5 professional skills.
+- "bio": A short, professional 2-3 sentence summary of their experience and motivation.
+
+Do NOT wrap the output in markdown code blocks like \`\`\`json. Return ONLY the raw JSON object.`;
+
+    // Call Gemini 2.5 Flash with the inline file data
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: [
+        {
+          inlineData: {
+            data: base64Data,
+            mimeType: mimeType
+          }
+        },
+        prompt
+      ],
+      config: {
+        responseMimeType: 'application/json',
+      }
+    });
+
+    const responseText = response.text;
+    if (!responseText) {
+      throw new Error("No response from Gemini");
+    }
+
+    // Parse the JSON string returned by Gemini
+    const extractedData = JSON.parse(responseText);
+
+    return NextResponse.json(extractedData);
 
   } catch (error: any) {
-    console.error("Error parsing CV:", error);
+    console.error("Error parsing CV with Gemini:", error);
     
-    // Handle Next.js buffer size limit errors (usually throws a TypeError or specific error)
     if (error?.message?.includes('body size limit') || error?.message?.includes('length')) {
        return NextResponse.json({ error: 'File is too large.' }, { status: 413 });
     }
