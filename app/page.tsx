@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import LanguageToggle from './components/LanguageToggle';
 
 export default function App() {
   const [userType, setUserType] = useState('seeker'); 
@@ -165,11 +166,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto mb-8">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-          Aktau<span className="text-blue-600">Match</span>
-        </h1>
-        <p className="text-slate-500 mb-6 font-medium">Create your smart profile. Skip the CV. Get hired today.</p>
+      <div className="max-w-6xl mx-auto mb-8 flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+            Aktau<span className="text-blue-600">Match</span>
+          </h1>
+          <p className="text-slate-500 mb-6 font-medium">Create your smart profile. Skip the CV. Get hired today.</p>
+        </div>
+        <LanguageToggle />
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">

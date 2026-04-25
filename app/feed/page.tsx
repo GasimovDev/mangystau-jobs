@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import LanguageToggle from '../components/LanguageToggle';
 
 export default function Feed() {
   const [profiles, setProfiles] = useState<any[]>([]);
@@ -71,11 +72,20 @@ export default function Feed() {
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans text-slate-800">
       <div className="max-w-6xl mx-auto mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-            Aktau<span className="text-blue-600">Match</span> Live Feed
-          </h1>
-          <p className="text-slate-500 font-medium">Smart matching for Aktau youth and small business.</p>
+        <div className="flex justify-between items-start w-full md:w-auto">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+              Aktau<span className="text-blue-600">Match</span> Live Feed
+            </h1>
+            <p className="text-slate-500 font-medium">Smart matching for Aktau youth and small business.</p>
+          </div>
+          <div className="md:hidden">
+            <LanguageToggle />
+          </div>
+        </div>
+        
+        <div className="hidden md:block">
+          <LanguageToggle />
         </div>
         
         {/* === UPDATED DROPDOWNS (BOUND TO STATE) === */}
