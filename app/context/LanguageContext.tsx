@@ -12,7 +12,7 @@ interface Translations {
 
 const translations: Translations = {
   // Page.tsx (Home / Registration)
-  createProfile: { en: "Create your smart profile. Skip the CV. Get hired today.", ru: "Создайте умный профиль. Забудьте о резюме. Найдите работу уже сегодня." },
+  createProfile: { en: "Upload your CV and let our AI instantly build your smart profile.", ru: "Загрузите свое резюме, и наш ИИ мгновенно создаст ваш умный профиль." },
   findJob: { en: "Find a Job (Vacancies)", ru: "Найти работу (Вакансии)" },
   findTalent: { en: "Find Talent (Profiles)", ru: "Найти таланты (Профили)" },
   magicAI: { en: "✨ Magic AI Autofill", ru: "✨ ИИ-автозаполнение" },
@@ -65,7 +65,7 @@ const translations: Translations = {
   
   // Feed page
   liveFeed: { en: "Live Feed", ru: "Живая Лента" },
-  smartMatching: { en: "Smart matching for Aktau youth and small business.", ru: "Умный подбор кадров для молодежи Актау и малого бизнеса." },
+  smartMatching: { en: "AI-powered job matching. Upload your CV and let the magic happen.", ru: "ИИ-подбор кадров. Загрузите резюме и позвольте магии случиться." },
   allLocations: { en: "All Locations", ru: "Все локации" },
   addNew: { en: "+ Add New", ru: "+ Добавить" },
   syncingAI: { en: "Syncing with AI Database...", ru: "Синхронизация с базой ИИ..." },
