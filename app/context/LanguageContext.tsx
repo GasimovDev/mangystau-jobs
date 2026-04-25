@@ -95,29 +95,35 @@ const translations: Translations = {
 interface LanguageContextProps {
   language: Language;
   toggleLanguage: () => void;
+  setLanguage: (lang: Language) => void;
   t: (key: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('ru'); // Default to RU based on request
+  const [language, setLanguageState] = useState<Language>('ru'); // Default to RU based on request
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     // Check localStorage on mount
     const saved = localStorage.getItem('language') as Language;
     if (saved === 'en' || saved === 'ru') {
-      setLanguage(saved);
+      setLanguageState(saved);
     }
     setMounted(true);
   }, []);
 
   const toggleLanguage = () => {
     const next = language === 'en' ? 'ru' : 'en';
-    setLanguage(next);
+    setLanguageState(next);
     localStorage.setItem('language', next);
   };
+
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem('language', lang);
+  }
 
   const t = (key: string) => {
     if (!translations[key]) {
@@ -128,7 +134,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, setLanguage, t }}>
       <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
         {children}
       </div>

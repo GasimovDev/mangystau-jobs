@@ -102,7 +102,7 @@ export default function Feed() {
         </div>
         
         {/* BOTTOM ROW: Tabs & Filters unified in a sleek bar */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-white/60 backdrop-blur-2xl p-2 rounded-2xl shadow-xl border border-white/60 gap-4">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center bg-slate-50 p-2 rounded-2xl border border-slate-200 gap-4">
           
           <div className="flex bg-slate-100 p-1 rounded-xl w-full lg:w-auto">
             <button onClick={() => setActiveTab('jobs')} className={`flex-1 lg:flex-none px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'jobs' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
@@ -113,12 +113,12 @@ export default function Feed() {
             </button>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 px-2 pb-2 lg:pb-0 w-full lg:w-auto">
-              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1 hidden sm:block">Filter:</span>
+          <div className="flex flex-col sm:flex-row flex-wrap items-center gap-3 px-2 pb-2 lg:pb-0 w-full lg:w-auto">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1 hidden lg:block">Filter:</span>
               <select 
                 value={filterIndustry}
                 onChange={(e) => setFilterIndustry(e.target.value)}
-                className="bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+                className="flex-1 w-full sm:w-auto min-w-[140px] bg-white border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer shadow-sm"
               >
                 <option value="All">Industry (Сфера)</option>
                 <option value="Food & Beverage">{t('foodBev')}</option>
@@ -129,7 +129,7 @@ export default function Feed() {
               <select 
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
-                className="bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+                className="flex-1 w-full sm:w-auto min-w-[140px] bg-white border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer shadow-sm"
               >
                 <option value="All">Type (Тип)</option>
                 <option value="Full-time">{t('fullTime')}</option>
@@ -139,7 +139,7 @@ export default function Feed() {
               <select 
                 value={filterDistrict} 
                 onChange={(e) => setFilterDistrict(e.target.value)}
-                className="bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer"
+                className="flex-1 w-full sm:w-auto min-w-[140px] bg-white border border-slate-200 text-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm outline-none focus:ring-2 focus:ring-blue-500 transition-all cursor-pointer shadow-sm"
               >
                 <option value="All">{t('allLocations')}</option>
                 <option value="14th">{t('fourteenth')}</option>
@@ -163,7 +163,7 @@ export default function Feed() {
           
           {/* === JOBS TAB === */}
           {activeTab === 'jobs' && displayedVacancies.map((job, index) => (
-             <div key={`job-${index}`} className="bg-white/60 backdrop-blur-2xl rounded-3xl p-6 shadow-xl border border-white/60 hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col">
+             <div key={`job-${index}`} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col">
                <div className="mb-4">
                  <span className="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-1 rounded-md font-bold uppercase tracking-wider mb-2 inline-block">{t('hiringNow')}</span>
                  <h3 className="font-bold text-xl text-slate-900 leading-tight">{job.job_title}</h3>
@@ -177,7 +177,7 @@ export default function Feed() {
                <p className="text-slate-800 font-bold text-lg mb-4">
                 💰 {job.salary ? `${Number(job.salary).toLocaleString('ru-RU')} ₸` : t('negotiable')}
                </p>
-               <div className="bg-white/50 p-3 rounded-xl border border-white/60 flex items-center justify-between mt-auto shadow-sm">
+               <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
                  <a 
                    href={`https://2gis.kz/aktau/search/${encodeURIComponent(job.microdistrict || 'Aktau')}`} 
                    target="_blank" 
@@ -194,7 +194,7 @@ export default function Feed() {
 
           {/* === TALENT TAB === */}
           {activeTab === 'talent' && displayedProfiles.map((profile, index) => (
-            <div key={`profile-${index}`} className="bg-white/60 backdrop-blur-2xl rounded-3xl p-6 shadow-xl border border-white/60 hover:shadow-2xl hover:-translate-y-1 transition-all flex flex-col">
+            <div key={`profile-${index}`} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
                   {/* === NEW: SHOW PHOTO IF IT EXISTS, OTHERWISE SHOW INITIAL === */}
@@ -225,7 +225,7 @@ export default function Feed() {
                   )}
                 </div>
               </div>
-              <div className="bg-white/50 p-3 rounded-xl border border-white/60 flex items-center justify-between mt-auto shadow-sm">
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
                 <span className="text-xs font-bold text-slate-500">📍 {profile.microdistrict || 'Aktau'}</span>
                 <div className="flex gap-2">
                   <a href={`/profile/${profile.telegram_username?.replace('@', '')}`} className="bg-white border border-blue-200 text-blue-600 hover:bg-blue-50 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors shadow-sm">{t('viewProfile')}</a>

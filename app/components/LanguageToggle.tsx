@@ -3,20 +3,22 @@ import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function LanguageToggle() {
-  const { language, toggleLanguage } = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center gap-2 z-50">
-      <span className={`text-xs font-bold ${language === 'en' ? 'text-blue-600' : 'text-slate-400'}`}>ENG</span>
+    <div className="flex items-center gap-3 z-50 bg-slate-100 p-1 rounded-full border border-slate-200">
       <button 
-        onClick={toggleLanguage}
-        className="w-12 h-6 bg-slate-200 rounded-full relative cursor-pointer outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        onClick={() => setLanguage('en')}
+        className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${language === 'en' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
       >
-        <div 
-          className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-md transition-all duration-300 ${language === 'ru' ? 'left-7 bg-blue-500' : 'left-1'}`}
-        />
+        ENG
       </button>
-      <span className={`text-xs font-bold ${language === 'ru' ? 'text-blue-600' : 'text-slate-400'}`}>РУС</span>
+      <button 
+        onClick={() => setLanguage('ru')}
+        className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${language === 'ru' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+      >
+        РУС
+      </button>
     </div>
   );
 }
