@@ -150,7 +150,7 @@ export default function App() {
         setSuccessData(finalData); 
         
         // Attempt to automatically open the Telegram channel in a new tab
-        window.open('https://t.me/mangystau_jobs', '_blank');
+        window.open('https://t.me/KaspianJobAnnouncements', '_blank');
       } else {
         const errorText = await response.text();
         alert(`Server Error! Press F12. Logs: ${errorText}`);
@@ -208,7 +208,7 @@ export default function App() {
               )}
 
               <a 
-                href="https://t.me/mangystau_jobs" 
+                href="https://t.me/KaspianJobAnnouncements" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg w-full flex justify-center items-center mb-4"
