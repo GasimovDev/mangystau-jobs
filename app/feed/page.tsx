@@ -176,7 +176,15 @@ export default function Feed() {
                 💰 {job.salary ? `${Number(job.salary).toLocaleString('ru-RU')} ₸` : t('negotiable')}
                </p>
                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
-                 <span className="text-xs font-bold text-slate-500">📍 {job.microdistrict || 'Aktau'}</span>
+                 <a 
+                   href={`https://2gis.kz/aktau/search/${encodeURIComponent(job.microdistrict || 'Aktau')}`} 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   className="text-xs font-bold text-slate-500 hover:text-blue-600 transition-colors cursor-pointer"
+                   title="Open in 2GIS"
+                 >
+                   📍 {job.microdistrict || 'Aktau'}
+                 </a>
                  <a href={`https://t.me/${job.telegram_contact?.replace('@', '')}`} target="_blank" rel="noopener noreferrer" className="bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center transition-colors shadow-sm">{t('apply')}</a>
                </div>
              </div>
