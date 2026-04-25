@@ -20,10 +20,9 @@ export default function Feed() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const headers = { 'ngrok-skip-browser-warning': 'true' };
         const [profilesRes, vacanciesRes] = await Promise.all([
-          fetch('https://raven-companion-starboard.ngrok-free.dev/profiles', { headers }),
-          fetch('https://raven-companion-starboard.ngrok-free.dev/vacancies', { headers })
+          fetch('https://mangystau-jobs.onrender.com/profiles'),
+          fetch('https://mangystau-jobs.onrender.com/vacancies')
         ]);
         
         if (!profilesRes.ok || !vacanciesRes.ok) throw new Error("Server Error");

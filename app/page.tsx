@@ -151,15 +151,14 @@ export default function App() {
     };
 
     const backendUrl = userType === 'seeker' 
-      ? "https://raven-companion-starboard.ngrok-free.dev/profiles" 
-      : "https://raven-companion-starboard.ngrok-free.dev/vacancies"; 
+      ? "https://mangystau-jobs.onrender.com/profiles" 
+      : "https://mangystau-jobs.onrender.com/vacancies"; 
 
     try {
       const response = await fetch(backendUrl, {
         method: 'POST',
         headers: { 
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true' 
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
       });

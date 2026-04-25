@@ -15,8 +15,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const headers = { 'ngrok-skip-browser-warning': 'true' };
-        const res = await fetch('https://raven-companion-starboard.ngrok-free.dev/profiles', { headers });
+        const res = await fetch('https://mangystau-jobs.onrender.com/profiles');
         if (!res.ok) throw new Error("Server Error");
         
         const data = await res.json();
