@@ -109,9 +109,11 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     // Check localStorage on mount
     const saved = localStorage.getItem('language') as Language;
     if (saved === 'en' || saved === 'ru') {
+      // eslint-disable-next-line
       setLanguageState(saved);
     }
     setMounted(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleLanguage = () => {
