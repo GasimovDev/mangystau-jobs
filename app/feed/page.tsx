@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import LanguageToggle from '../components/LanguageToggle';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Feed() {
   const { t } = useLanguage();
