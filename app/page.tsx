@@ -168,14 +168,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto mb-8 flex justify-between items-start">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-            Aktau<span className="text-blue-600">Match</span>
-          </h1>
-          <p className="text-slate-500 mb-6 font-medium">{t('createProfile')}</p>
-        </div>
-        <LanguageToggle />
+      <div className="max-w-6xl mx-auto mb-8">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+          Aktau<span className="text-blue-600">Match</span>
+        </h1>
+        <p className="text-slate-500 mb-6 font-medium">{t('createProfile')}</p>
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
@@ -233,19 +230,22 @@ export default function App() {
             </div>
           ) : (
             <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-6 md:p-10">
-              <div className="flex bg-slate-200 p-1.5 rounded-xl w-fit mb-8">
-                <button 
-                  onClick={() => setUserType('seeker')}
-                  className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'seeker' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
-                >
-                  {t('lookingForWork')}
-                </button>
-                <button 
-                  onClick={() => setUserType('employer')}
-                  className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'employer' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
-                >
-                  {t('amEmployer')}
-                </button>
+              <div className="flex justify-between items-center mb-8">
+                <div className="flex bg-slate-200 p-1.5 rounded-xl w-fit">
+                  <button 
+                    onClick={() => setUserType('seeker')}
+                    className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'seeker' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                    {t('lookingForWork')}
+                  </button>
+                  <button 
+                    onClick={() => setUserType('employer')}
+                    className={`flex items-center px-6 py-2.5 rounded-lg font-semibold text-sm transition-all ${userType === 'employer' ? 'bg-white shadow-sm text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}
+                  >
+                    {t('amEmployer')}
+                  </button>
+                </div>
+                <LanguageToggle />
               </div>
 
               <h2 className="text-2xl font-bold mb-8 text-slate-800">
