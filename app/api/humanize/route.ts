@@ -36,7 +36,8 @@ Motivation letter:
       throw new Error("No response from Gemini");
     }
 
-    const data = JSON.parse(responseText);
+    const cleanedText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const data = JSON.parse(cleanedText);
     
     if (typeof data.humanity_score !== 'number') {
       throw new Error("Invalid response format from Gemini");

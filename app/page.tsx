@@ -57,7 +57,7 @@ export default function App() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: res.statusText }));
-        alert(`Error parsing CV: ${err.error || res.statusText}`);
+        alert(`Error parsing CV: ${err.error || res.statusText}\n${err.details ? 'Details: ' + err.details : ''}`);
         return;
       }
 
@@ -200,7 +200,7 @@ export default function App() {
       if (res.ok && typeof data.humanity_score === 'number') {
         setHumanityScore(data.humanity_score);
       } else {
-        alert(data.error || 'Error analyzing humanity');
+        alert(`${data.error || 'Error analyzing humanity'}\n${data.details ? 'Details: ' + data.details : ''}`);
       }
     } catch (err) {
       console.error(err);

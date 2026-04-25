@@ -56,16 +56,17 @@ Do NOT wrap the output in markdown code blocks like \`\`\`json. Return ONLY the 
       throw new Error("No response from Gemini");
     }
 
-    // Parse the JSON string returned by Gemini
-    const extractedData = JSON.parse(responseText);
+    // Parse the JSON string returned by Gemini (handling potential markdown)
+    const cleanedText = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const extractedData = JSON.parse(cleanedText);
 
     return NextResponse.json(extractedData);
 
   } catch (error: any) {
     console.error("Error parsing CV with Gemini:", error);
-    
+
     if (error?.message?.includes('body size limit') || error?.message?.includes('length')) {
-       return NextResponse.json({ error: 'File is too large.' }, { status: 413 });
+      return NextResponse.json({ error: 'File is too large.' }, { status: 413 });
     }
 
     return NextResponse.json({ error: 'Internal server error while processing the CV file.', details: error.message }, { status: 500 });
