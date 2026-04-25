@@ -180,7 +180,7 @@ export default function Feed() {
                </div>
                <p className="text-slate-600 text-sm mb-4 line-clamp-3">{job.requirements}</p>
                <p className="text-slate-800 font-bold text-lg mb-4">
-                💰 {job.salary ? `${Number(job.salary).toLocaleString('ru-RU')} ₸` : t('negotiable')}
+                💰 {job.salary ? (String(job.salary).replace(/\D/g, '') === '' ? job.salary : `${Number(String(job.salary).replace(/\D/g, '')).toLocaleString('ru-RU')} ₸`) : t('negotiable')}
                </p>
                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between mt-auto">
                  <a 
